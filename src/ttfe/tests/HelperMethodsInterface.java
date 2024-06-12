@@ -20,4 +20,6 @@ public interface HelperMethodsInterface {
     */
     public int getEmptyPositions (int[][] gameBoard);
     //public int compareBoards (int [][]board1 , int[][] board2);
+
+    public void printBoard (int [][] gameBoard); 
 }

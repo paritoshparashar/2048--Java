@@ -21,6 +21,10 @@ public class SimpleTests {
 	private SimulatorInterface game;
 	private HelperMethodsInterface helper;
 
+	public SimpleTests() {
+        this.helper = new TestHelperMethods();
+    }
+
 	@Before
 	public void setUp() {
 		game = TTFEFactory.createSimulator(4, 4, new Random(0));
@@ -49,10 +53,14 @@ public class SimpleTests {
 		int [][] newBoardState = helper.getCurrentBoardState(game);
 		int newEmptyTiles = helper.getEmptyPositions(newBoardState);
 
-		//Check if a new tile was added
+		//Check if a new tile was added only at empty position
 		assertEquals(currentEmptyTiles - 1, newEmptyTiles);
 
+
+		
 		boolean twoOrFour = true;
+
+		helper.printBoard(currentBoardState);
 
 		for (int i = 0; i < newBoardState.length; i++) {
 			
@@ -78,7 +86,5 @@ public class SimpleTests {
 		game.addPiece();
 		assertEquals( num_moves + 1, game.getNumPieces()); // Tests if the move was made
 	}
-
-	
 
 }

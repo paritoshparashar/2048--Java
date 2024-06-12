@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SimpleTests",
+            "request": "launch",
+            "mainClass": "ttfe.tests.SimpleTests",
+            "projectName": "2048"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -16,10 +23,15 @@
             "request": "launch",
             "mainClass": "ttfe.TTFE",
             "args": [
-                "--seed", "${input:seed}",
-                "--width", "${input:width}",
-                "--height", "${input:height}",
-                "--player", "${input:player}"],
+                "--seed",
+                "${input:seed}",
+                "--width",
+                "${input:width}",
+                "--height",
+                "${input:height}",
+                "--player",
+                "${input:player}"
+            ],
             "projectName": "2048"
         }
     ],

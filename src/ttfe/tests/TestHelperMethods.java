@@ -4,6 +4,9 @@ import ttfe.SimulatorInterface;
 
 public class TestHelperMethods implements HelperMethodsInterface{
 
+    
+
+    @Override
 	public int [][] getCurrentBoardState (SimulatorInterface game) {
 		int [][] board = new int[game.getBoardHeight()][game.getBoardWidth()];
 
@@ -17,6 +20,7 @@ public class TestHelperMethods implements HelperMethodsInterface{
 		return board;
 	}
 
+    @Override
     public int getEmptyPositions (int[][] gameBoard) {
         
         int emptyCount = 0;
@@ -31,5 +35,18 @@ public class TestHelperMethods implements HelperMethodsInterface{
             }
         }
         return emptyCount;
+    }
+
+    @Override
+    public void printBoard(int[][] gameBoard) {
+        
+        for (int i = 0; i < gameBoard.length; i++) {
+            
+            for (int j = 0; j < gameBoard[i].length; j++) {
+                
+                System.out.println(gameBoard[i][j]);
+            }
+        }
+        
     }
 }
