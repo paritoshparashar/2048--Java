@@ -39,9 +39,9 @@ public class SimpleTests {
 
 	@Test
 	public void testAddPiece () {
-		int num_moves = game.getNumMoves();
+		int num_moves = game.getNumPieces();
 		game.addPiece();
-		assertEquals( num_moves + 1, game.getNumMoves()); // Tests if the move was made
+		assertEquals( num_moves + 1, game.getNumPieces()); // Tests if the move was made
 
 		
 	}
