@@ -44,7 +44,11 @@ public class SimpleTests {
 		int [][] currentBoardState = this.getCurrentBoardState(game);
 		int currentEmptyTiles = this.getEmptyPositions(currentBoardState);
 
-		game.addPiece();
+		// int num_pieces = game.getNumPieces();
+		// game.addPiece();
+        // assertEquals("The number of pieces should be 1 after adding a piece", num_pieces + 1, game.getNumPieces());
+
+	
 
 		int [][] newBoardState = this.getCurrentBoardState(game);
 		int newEmptyTiles = this.getEmptyPositions(newBoardState);
@@ -72,15 +76,17 @@ public class SimpleTests {
 			}
 		}
 		// Check if new tile has value of 2 or 4
-		assertTrue(twoOrFour); 
+		assertTrue(twoOrFour);
+
+				
 
 	}
 
 	@Test
 	public void testNumPieces () { //Check this later
-		int num_moves = game.getNumPieces();
+		int num_pieces = game.getNumPieces();
 		game.addPiece();
-		assertEquals( num_moves + 1, game.getNumPieces()); // Tests if the move was made
+		assertEquals( num_pieces + 1, game.getNumPieces()); // Tests if the move was made
 	}
 
 	/*
