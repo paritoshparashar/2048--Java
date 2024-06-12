@@ -19,6 +19,7 @@ import ttfe.TTFEFactory;
 public class SimpleTests {
 
 	private SimulatorInterface game;
+	private HelperMethodsInterface helper;
 
 	@Before
 	public void setUp() {
@@ -39,11 +40,45 @@ public class SimpleTests {
 
 	@Test
 	public void testAddPiece () {
+
+		int [][] currentBoardState = helper.getCurrentBoardState(game);
+		int currentEmptyTiles = helper.getEmptyPositions(currentBoardState);
+
+		game.addPiece();
+
+		int [][] newBoardState = helper.getCurrentBoardState(game);
+		int newEmptyTiles = helper.getEmptyPositions(newBoardState);
+
+		//Check if a new tile was added
+		assertEquals(currentEmptyTiles - 1, newEmptyTiles);
+
+		boolean twoOrFour = true;
+
+		for (int i = 0; i < newBoardState.length; i++) {
+			
+			for (int j = 0; j < newBoardState[i].length; j++) {
+				
+				if (currentBoardState[i][j] != newBoardState[i][j]) 
+				{
+					if (newBoardState[i][j] != 2 || newBoardState[i][j] != 4)
+					{
+						twoOrFour = false;
+					}
+				}
+			}
+		}
+		// Check if new tile has value of 2 or 4
+		assertTrue(twoOrFour); 
+
+	}
+
+	@Test
+	public void testNumPieces () { //Check this later
 		int num_moves = game.getNumPieces();
 		game.addPiece();
 		assertEquals( num_moves + 1, game.getNumPieces()); // Tests if the move was made
-
-		
 	}
+
+	
 
 }
