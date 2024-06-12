@@ -37,4 +37,13 @@ public class SimpleTests {
 				4 == game.getBoardHeight());
 	}
 
+	@Test
+	public void testAddPiece () {
+		int num_moves = game.getNumMoves();
+		game.addPiece();
+		assertEquals( num_moves + 1, game.getNumMoves()); // Tests if the move was made
+
+		
+	}
+
 }
