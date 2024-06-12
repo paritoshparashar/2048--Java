@@ -17,9 +17,19 @@ public class TestHelperMethods implements HelperMethodsInterface{
 		return board;
 	}
 
-    public int calculateEmptyPositions (int[][] board) {
-
+    public int getEmptyPositions (int[][] gameBoard) {
         
-        return 0;
+        int emptyCount = 0;
+
+        for (int i = 0; i < gameBoard.length; i++) {
+
+            for (int j = 0; j < gameBoard[i].length; j++) {
+                
+                if (gameBoard[i][j] == 0) {
+                    emptyCount++;
+                }
+            }
+        }
+        return emptyCount;
     }
 }
