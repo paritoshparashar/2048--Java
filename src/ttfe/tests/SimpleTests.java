@@ -19,11 +19,7 @@ import ttfe.TTFEFactory;
 public class SimpleTests {
 
 	private SimulatorInterface game;
-	private HelperMethodsInterface helper;
-
-	public SimpleTests() {
-        this.helper = new TestHelperMethods();
-    }
+	
 
 	@Before
 	public void setUp() {
@@ -45,13 +41,13 @@ public class SimpleTests {
 	@Test
 	public void testAddPiece () {
 
-		int [][] currentBoardState = helper.getCurrentBoardState(game);
-		int currentEmptyTiles = helper.getEmptyPositions(currentBoardState);
+		int [][] currentBoardState = this.getCurrentBoardState(game);
+		int currentEmptyTiles = this.getEmptyPositions(currentBoardState);
 
 		game.addPiece();
 
-		int [][] newBoardState = helper.getCurrentBoardState(game);
-		int newEmptyTiles = helper.getEmptyPositions(newBoardState);
+		int [][] newBoardState = this.getCurrentBoardState(game);
+		int newEmptyTiles = this.getEmptyPositions(newBoardState);
 
 		//Check if a new tile was added only at empty position
 		assertEquals(currentEmptyTiles - 1, newEmptyTiles);
@@ -60,7 +56,7 @@ public class SimpleTests {
 		
 		boolean twoOrFour = true;
 
-		helper.printBoard(currentBoardState);
+		this.printBoard(currentBoardState);
 
 		for (int i = 0; i < newBoardState.length; i++) {
 			
@@ -86,5 +82,55 @@ public class SimpleTests {
 		game.addPiece();
 		assertEquals( num_moves + 1, game.getNumPieces()); // Tests if the move was made
 	}
+
+	/*
+	 * 
+	 * Helper Functions below
+	 * 
+	 */
+
+	 
+	public int [][] getCurrentBoardState (SimulatorInterface game) {
+		int [][] board = new int[game.getBoardHeight()][game.getBoardWidth()];
+
+		for (int i = 0; i < game.getBoardHeight(); i++) {
+			
+			for (int j = 0; j < game.getBoardWidth(); j++) {
+				
+				board[i][j] = game.getPieceAt(j, i);
+			}
+		}
+		return board;
+	}
+
+    
+    public int getEmptyPositions (int[][] gameBoard) {
+        
+        int emptyCount = 0;
+
+        for (int i = 0; i < gameBoard.length; i++) {
+
+            for (int j = 0; j < gameBoard[i].length; j++) {
+                
+                if (gameBoard[i][j] == 0) {
+                    emptyCount++;
+                }
+            }
+        }
+        return emptyCount;
+    }
+
+    
+    public void printBoard(int[][] gameBoard) {
+        
+        for (int i = 0; i < gameBoard.length; i++) {
+            
+            for (int j = 0; j < gameBoard[i].length; j++) {
+                
+                System.out.println(gameBoard[i][j]);
+            }
+        }
+        
+    }
 
 }
