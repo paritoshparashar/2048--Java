@@ -220,16 +220,45 @@ public class SimpleTests {
             }
         }
 
-
-
-        // Check for Corners
-
     }
 
     // With Direction
 
+    @Test
+    public void testIsMovePossibleWithDirection (MoveDirection direction) {
+
+        if (!game.isMovePossible()) {
+            assert (false);
+        }
+        
+        // TODO: Implement this
+    }
 
     // __________________________________________________ //
+
+    /*
+     * Test for an empty space
+     */
+
+    @Test
+    public void testIsSpaceLeft () {
+
+        boolean emptySpaceFound = false;
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+            
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+    
+                if (game.getPieceAt(i, j) == 0) {
+                    emptySpaceFound = true;
+                    break;
+                }
+            }
+            if (emptySpaceFound) {
+                break;
+            }
+        }
+        assertTrue(emptySpaceFound);
+    }
 
     //@Test
     // public void addPieceTest () {
