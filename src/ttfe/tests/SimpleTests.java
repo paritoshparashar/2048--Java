@@ -31,7 +31,7 @@ public class SimpleTests {
     @Test
     public void testAddPieceAtEmpty() {
         game.addPiece();
-        assertEquals("The number of pieces should be 1 after adding a piece", 3, game.getNumPieces());
+        assertEquals("The number of pieces should be 1 after adding a piece", 1, game.getNumPieces());
         
     }
 
