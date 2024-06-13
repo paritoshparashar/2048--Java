@@ -41,20 +41,22 @@ public class SimpleTests {
 	@Test
 	public void testAddPiece () {
 
-		int [][] currentBoardState = this.getCurrentBoardState(game);
-		int currentEmptyTiles = this.getEmptyPositions(currentBoardState);
-
-		// int num_pieces = game.getNumPieces();
-		// game.addPiece();
-        // assertEquals("The number of pieces should be 1 after adding a piece", num_pieces + 1, game.getNumPieces());
+		
+		
+		int num_pieces = game.getNumPieces();
+		game.addPiece();
+        assertEquals("The number of pieces should be 1 after adding a piece", num_pieces + 1, game.getNumPieces());
 
 	
-
+		int [][] currentBoardState = this.getCurrentBoardState(game);
 		int [][] newBoardState = this.getCurrentBoardState(game);
-		int newEmptyTiles = this.getEmptyPositions(newBoardState);
+
+		// int currentEmptyTiles = this.getEmptyPositions(currentBoardState);
+		// game.addPiece();
+		// int newEmptyTiles = this.getEmptyPositions(newBoardState);
 
 		//Check if a new tile was added only at empty position
-		assertEquals(currentEmptyTiles - 1, newEmptyTiles);
+		// assertEquals(currentEmptyTiles - 1, newEmptyTiles);
 
 
 		
