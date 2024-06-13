@@ -125,7 +125,7 @@ public class SimpleTests {
     // __________________________________________________ //
 
     /*
-     * Tests for the value of pieces
+     * Test for the initial value of pieces
      */
 
     @Test
@@ -144,6 +144,37 @@ public class SimpleTests {
         }
 
         assertTrue(nonZeroCount == 2);
+    }
+
+    // __________________________________________________ //
+
+    /*
+     * Tests for the number of points
+     */
+
+    @Test
+    public void testInitialPoints () {
+        assertTrue("Get Points should 0 as intial points",0 == game.getPoints());
+    }
+
+    @Test
+    public void testPointsAfterAMove (){
+
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+            
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                game.setPieceAt(i, j, 0); // Remove all the pieces
+            }
+        }
+
+        game.setPieceAt(0, 0, 2);
+        game.setPieceAt(2, 0, 2);
+        if (game.isMovePossible(MoveDirection.EAST)) {
+            game.performMove(MoveDirection.EAST);
+        }
+        assertTrue(4 == game.getPoints());
+
     }
     //@Test
     // public void addPieceTest () {
