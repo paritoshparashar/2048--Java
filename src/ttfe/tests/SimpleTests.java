@@ -1,6 +1,7 @@
 package ttfe.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
@@ -201,39 +202,43 @@ public class SimpleTests {
     public void testInitialIsMovePossibleWithoutDirection () {
 
         assertTrue (game.isMovePossible()); // Initially there should be at least one possible move
-        
-        // int currentPiece = 0;
-        // boolean movePossible = false;
-
-        // // Loop for the innerboard (without the four outer edges)
-        // for (int i = 0; i < game.getBoardHeight(); i++) {
-            
-        //     for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-        //         currentPiece = game.getPieceAt(i, j);
-    
-        //         if (currentPiece == 0) {
-        //             movePossible = true;
-        //             break;
-        //         }
-
-        //         if (j+1 < game.getBoardWidth() && currentPiece == game.getPieceAt(i, j+1)) {
-        //             movePossible = true;
-        //             break;
-        //         }
-        //         if (i+1 < game.getBoardHeight() && currentPiece == game.getPieceAt(i+1, j)) {
-        //             movePossible = true;
-        //             break;
-        //         }
-                
-        //     }
-
-        //     if (movePossible) {
-        //         break;
-        //     }
-        // }
 
     }
+
+    @Test
+    public void testIsMovePossibleInAFullBoardWithoutDirection () {
+        int[][] array = {
+            {2, 4, 8, 16},
+            {32, 64, 128, 256},
+            {512, 1024, 2, 4},
+            {8, 16, 32, 64}
+        };
+
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                game.setPieceAt(i, j, array[i][j]);
+            }
+        }
+
+        assertFalse(game.isMovePossible());
+    }
+    public void testIsMovePossibleInAFullBoardWithoutDirection2 () {
+
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                game.setPieceAt(i, j, 2);
+            }
+        }
+        
+        assertTrue(game.isMovePossible());
+    }
+
+
+
 
     // With Direction
 
@@ -251,7 +256,8 @@ public class SimpleTests {
             }
         }
         assertTrue (movePossible);
-    } 
+    }
+
 
     // __________________________________________________ //
 
