@@ -224,21 +224,26 @@ public class SimpleTests {
 
     // With Direction
 
-    @Test
-    public void testIsMovePossibleWithDirection (MoveDirection direction) {
+    // @Test
+    // public void testIsMovePossibleWithDirection (MoveDirection direction) {
 
-        if (!game.isMovePossible()) {
-            assert (false);
-        }
+    //     if (!game.isMovePossible()) {
+    //         assert (false);
+    //     }
         
-        // TODO: Implement this
-    }
+    //     // TODO: Implement this
+    // }
 
     // __________________________________________________ //
 
     /*
      * Test for an empty space
      */
+
+    @Test
+    public void testInitialIsSpaceLeft () {
+        assertTrue(game.isSpaceLeft()); // Empty space must be there at starting
+    }
 
     @Test
     public void testIsSpaceLeft () {
