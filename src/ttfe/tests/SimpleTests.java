@@ -34,29 +34,22 @@ public class SimpleTests {
 		assertEquals("The number of pieces did not increase by one after adding a piece", currentTiles + 1, game.getNumPieces());
 	}
 
-    @Test void testAddPiece2or4 () {
-
-        int [][] currentBoardState = this.getCurrentBoardState(game);
-        game.addPiece();
-        int [][] newBoardState = this.getCurrentBoardState(game);
-
-        boolean twoOrFour = true;
-    
-        for (int i = 0; i < newBoardState.length; i++) {
-               
-            for (int j = 0; j < newBoardState[i].length; j++) {
-                   
-                if (currentBoardState[i][j] != newBoardState[i][j]) 
-                {
-                    if (newBoardState[i][j] != 2 || newBoardState[i][j] != 4)
-                    {
-                        twoOrFour = false;
+    @Test
+    public void testAddPieceValue() {
+        for (int i = 0; i < 10; i++) { // Adding pieces multiple times to test values
+            game.addPiece();
+            boolean found = false;
+            for (int x = 0; x < game.getBoardWidth(); x++) {
+                for (int y = 0; y < game.getBoardHeight(); y++) {
+                    int value = game.getPieceAt(x, y);
+                    if (value == 2 || value == 4) {
+                        found = true;
                     }
+                    assertTrue("Piece value should be 0, 2, or 4", value == 0 || value == 2 || value == 4);
                 }
             }
+            assertTrue("No new piece with value 2 or 4 was added", found);
         }
-        // Check if new tile has value of 2 or 4
-        assertTrue(twoOrFour); 
     }
 
     @Test
