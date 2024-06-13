@@ -29,7 +29,7 @@ public class SimpleTests {
 	}
 
     @Test
-    public void testAddPiece() {
+    public void testAddPieceAtEmpty() {
         game.addPiece();
         assertEquals("The number of pieces should be 1 after adding a piece", 3, game.getNumPieces());
         
@@ -65,7 +65,50 @@ public class SimpleTests {
 		assertTrue("The initial game board did not have correct height",
 				4 == game.getBoardHeight());
 	}
+    @Test
+	public void testInitialBoardWidth() {
+		assertTrue("The initial game board did not have correct height",
+				4 == game.getBoardWidth());
+	}
 
+    @Test
+    public void testInitialNumOfMoves () {
+        assertTrue ("Initial moves not equal to zero", 0 == game.getNumMoves());
+    }
+
+    @Test
+    public void testNumOfMovesAfterMovingNORTH (){
+        if (game.isMovePossible(MoveDirection.NORTH))
+        {
+            game.performMove (MoveDirection.NORTH);
+            assertEquals(1, game.getNumMoves());
+        }
+    }
+    @Test
+    public void testNumOfMovesAfterMovingSOUTH (){
+        if (game.isMovePossible(MoveDirection.SOUTH))
+        {
+            game.performMove (MoveDirection.SOUTH);
+            assertEquals(1, game.getNumMoves());
+        }
+    }
+    @Test
+    public void testNumOfMovesAfterMovingEAST (){
+        if (game.isMovePossible(MoveDirection.EAST))
+        {
+            game.performMove (MoveDirection.EAST);
+            assertEquals(1, game.getNumMoves());
+        }
+    }
+    @Test
+    public void testNumOfMovesAfterMovingWEST (){
+        if (game.isMovePossible(MoveDirection.WEST))
+        {
+            game.performMove (MoveDirection.WEST);
+            assertEquals(1, game.getNumMoves());
+        }
+    }
+    
 
     //@Test
     // public void addPieceTest () {
