@@ -224,6 +224,8 @@ public class SimpleTests {
 
         assertFalse(game.isMovePossible());
     }
+
+    @Test
     public void testIsMovePossibleInAFullBoardWithoutDirection2 () {
 
         for (int i = 0; i < game.getBoardHeight(); i++) {
@@ -256,6 +258,60 @@ public class SimpleTests {
             }
         }
         assertTrue (movePossible);
+    }
+
+    @Test
+    public void testIsMovePossibleInAFullBoardWithDirection () {
+        int[][] array = {
+            {2, 4, 8, 16},
+            {32, 64, 128, 256},
+            {512, 1024, 2, 4},
+            {8, 16, 32, 64}
+        };
+
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                game.setPieceAt(i, j, array[i][j]);
+            }
+        }
+
+        boolean movePossible = false;
+
+        for (MoveDirection direction : MoveDirection.values()) {
+            
+            movePossible = game.isMovePossible(direction);
+            if (movePossible) {
+                break;
+            }
+        }
+
+        assertFalse(movePossible);
+    }
+
+    @Test
+    public void testIsMovePossibleInAFullBoardWithDirection2 () {
+
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                game.setPieceAt(i, j, 2);
+            }
+        }
+
+        boolean movePossible = false;
+        
+        for (MoveDirection direction : MoveDirection.values()) {
+            
+            movePossible = game.isMovePossible(direction);
+            if (movePossible) {
+                break;
+            }
+        }
+        
+        assertTrue(movePossible);
     }
 
 
