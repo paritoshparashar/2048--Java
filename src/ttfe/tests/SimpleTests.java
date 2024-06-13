@@ -30,9 +30,9 @@ public class SimpleTests {
 
     @Test
     public void testAddPiece() {
-        int num_pieces = game.getNumPieces();
         game.addPiece();
         assertEquals("The number of pieces should be 1 after adding a piece", 1, game.getNumPieces());
+        //assertTrue(game.getPoints() == 2 || game.getPoints() == 4);
     }
 
     @Test
@@ -73,9 +73,12 @@ public class SimpleTests {
     }
 
 	@Test
-	public void testInitialGamePoints() {
+	public void testGamePoints() {
 		assertEquals("The initial game did not have zero points", 0,
 				game.getPoints());
+        // game.setPieceAt(0, 0, 2);
+        // game.setPieceAt(0, 1, 2);
+
 	}
 	
 	@Test
