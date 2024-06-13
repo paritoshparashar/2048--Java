@@ -1,7 +1,6 @@
 package ttfe.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
@@ -29,11 +28,11 @@ public class SimpleTests {
 	}
 
     @Test
-    public void testAddPieceAtEmpty() {
-        game.addPiece();
-        assertEquals("The number of pieces should be 1 after adding a piece", 1, game.getNumPieces());
-        
-    }
+	public void testAddPieceAtEmpty() {
+		int currentTiles = game.getNumPieces();
+		game.addPiece();
+		assertEquals("The number of pieces did not increase by one after adding a piece", currentTiles + 1, game.getNumPieces());
+	}
 
     @Test void testAddPiece2or4 () {
 
@@ -71,6 +70,9 @@ public class SimpleTests {
 				4 == game.getBoardWidth());
 	}
 
+    /*
+     * Tests for Number of Moves
+     */
     @Test
     public void testInitialNumOfMoves () {
         assertTrue ("Initial moves not equal to zero", 0 == game.getNumMoves());
@@ -108,7 +110,16 @@ public class SimpleTests {
             assertEquals(1, game.getNumMoves());
         }
     }
-    
+    // __________________________________________ //
+
+    /*
+     * Test for Number of Pieces
+     */
+
+    @Test
+    public void testInitialNumberOfPieces () {
+        assertEquals(2, game.getNumPieces());
+    }
 
     //@Test
     // public void addPieceTest () {
