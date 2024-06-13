@@ -176,6 +176,61 @@ public class SimpleTests {
         assertTrue(4 == game.getPoints());
 
     }
+
+    // __________________________________________________ //
+
+    /*
+     * Tests to check if a move is possible
+     */
+
+    // Without Direction
+
+    @Test 
+    public void testIsMovePossibleWithoutDirection () {
+
+        
+        int currentPiece = 0;
+        boolean movePossible = false;
+
+        // Loop for the innerboard (without the four outer edges)
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+            
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                currentPiece = game.getPieceAt(i, j);
+    
+                if (currentPiece == 0) {
+                    movePossible = true;
+                    break;
+                }
+
+                if (j+1 < game.getBoardWidth() && currentPiece == game.getPieceAt(i, j+1)) {
+                    movePossible = true;
+                    break;
+                }
+                if (i+1 < game.getBoardHeight() && currentPiece == game.getPieceAt(i+1, j)) {
+                    movePossible = true;
+                    break;
+                }
+                
+            }
+
+            if (movePossible) {
+                break;
+            }
+        }
+
+
+
+        // Check for Corners
+
+    }
+
+    // With Direction
+
+
+    // __________________________________________________ //
+
     //@Test
     // public void addPieceTest () {
 
