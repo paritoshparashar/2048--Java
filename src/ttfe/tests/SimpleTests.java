@@ -26,7 +26,9 @@ public class SimpleTests {
 	public void setUp() {
 		game = TTFEFactory.createSimulator(4, 4, new Random(0));
 	}
-
+    /*
+     * Tests for Add Piece
+     */
     @Test
 	public void testAddPieceAtEmpty() {
 		int currentTiles = game.getNumPieces();
@@ -56,6 +58,7 @@ public class SimpleTests {
             assertTrue("No new piece with value 2 or 4 was added", isTwoOrFour);
         }
     }
+    // __________________________________________________ //
 
     @Test
 	public void testInitialBoardHeight() {
@@ -108,7 +111,7 @@ public class SimpleTests {
             assertEquals(1, game.getNumMoves());
         }
     }
-    // __________________________________________ //
+    // __________________________________________________ //
 
     /*
      * Test for Number of Pieces
@@ -119,6 +122,29 @@ public class SimpleTests {
         assertEquals(2, game.getNumPieces());
     }
 
+    // __________________________________________________ //
+
+    /*
+     * Tests for the value of pieces
+     */
+
+    @Test
+    public void testInitialValueOfPieces () {
+
+        int nonZeroCount = 0;
+
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+            
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                if (game.getPieceAt(i, j) != 0) {
+                    ++nonZeroCount;
+                }
+            }
+        }
+
+        assertTrue(nonZeroCount == 2);
+    }
     //@Test
     // public void addPieceTest () {
 
