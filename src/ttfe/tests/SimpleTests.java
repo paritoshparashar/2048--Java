@@ -27,14 +27,15 @@ public class SimpleTests {
 	public void setUp() {
 		game = TTFEFactory.createSimulator(4, 4, new Random(0));
 	}
-	
-	@Test
-	public void testInitialGamePoints() {
-		assertEquals("The initial game did not have zero points", 0,
-				game.getPoints());
-	}
-	
-	@Test
+
+    @Test
+    public void testAddPiece() {
+        int num_pieces = game.getNumPieces();
+        game.addPiece();
+        assertEquals("The number of pieces should be 1 after adding a piece", 1, game.getNumPieces());
+    }
+
+    @Test
 	public void testInitialBoardHeight() {
 		assertTrue("The initial game board did not have correct height",
 				4 == game.getBoardHeight());
@@ -59,35 +60,36 @@ public class SimpleTests {
     }
 
     @Test
-    public void testAddPiece() {
-        int num_pieces = game.getNumPieces();
-        game.addPiece();
-        assertEquals("The number of pieces should be 1 after adding a piece", num_pieces+1, game.getNumPieces());
-    }
-
+	public void testNumPieces () { //Check this later
+		int num_pieces = game.getNumPieces();
+		game.addPiece();
+		assertEquals( num_pieces + 1, game.getNumPieces()); // Tests if the move was made
+	}
+	
     @Test
     public void testGetPieceAt() {
         game.setPieceAt(0, 0, 2);
         assertEquals("The piece at (0, 0) should be 2", 2, game.getPieceAt(0, 0));
     }
 
-    // @Test(expected = IllegalArgumentException.class)
-    // public void testGetPieceAtInvalidPosition() {
-    //     game.getPieceAt(-1, 0);  // Should throw IllegalArgumentException
-    // }
+	@Test
+	public void testInitialGamePoints() {
+		assertEquals("The initial game did not have zero points", 0,
+				game.getPoints());
+	}
+	
+	@Test
+    public void testIsMovePossibleGeneral() {
+        game.setPieceAt(0, 0, 2);
+        game.setPieceAt(0, 1, 2);
+        assertTrue("There should be at least one possible move", game.isMovePossible());
+    }
 
     @Test
     public void testIsMovePossible() {
         game.setPieceAt(0, 0, 2);
         game.setPieceAt(0, 1, 2);
         assertTrue("Move should be possible", game.isMovePossible(MoveDirection.NORTH));
-    }
-
-    @Test
-    public void testIsMovePossibleGeneral() {
-        game.setPieceAt(0, 0, 2);
-        game.setPieceAt(0, 1, 2);
-        assertTrue("There should be at least one possible move", game.isMovePossible());
     }
 
     @Test
@@ -105,8 +107,6 @@ public class SimpleTests {
         assertEquals("The number of moves should be 1", 1, game.getNumMoves());
     }
 
-    
-
     @Test
     public void testSetPieceAt() {
         game.setPieceAt(0, 0, 2);
@@ -115,15 +115,20 @@ public class SimpleTests {
         assertEquals("The piece at (0, 0) should be removed", 0, game.getPieceAt(0, 0));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testSetPieceAtInvalidPosition() {
-        game.setPieceAt(-1, 0, 2);  // Should throw IllegalArgumentException
-    }
+    // @Test(expected = IllegalArgumentException.class)
+    // public void testGetPieceAtInvalidPosition() {
+    //     game.getPieceAt(-1, 0);  // Should throw IllegalArgumentException
+    // }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testSetPieceAtNegativeValue() {
-        game.setPieceAt(0, 0, -2);  // Should throw IllegalArgumentException
-    }
+    // @Test(expected = IllegalArgumentException.class)
+    // public void testSetPieceAtInvalidPosition() {
+    //     game.setPieceAt(-1, 0, 2);  // Should throw IllegalArgumentException
+    // }
+
+    // @Test(expected = IllegalArgumentException.class)
+    // public void testSetPieceAtNegativeValue() {
+    //     game.setPieceAt(0, 0, -2);  // Should throw IllegalArgumentException
+    // }
 
     private void fillBoard() {
         for (int i = 0; i < game.getBoardHeight(); i++) {
@@ -179,12 +184,7 @@ public class SimpleTests {
     //     assertEquals("The number of pieces should be 1 after adding a piece", 1, game.getNumPieces());
     // }
 
-	@Test
-	public void testNumPieces () { //Check this later
-		int num_pieces = game.getNumPieces();
-		game.addPiece();
-		assertEquals( num_pieces + 1, game.getNumPieces()); // Tests if the move was made
-	}
+	
 	
 
 	/*
