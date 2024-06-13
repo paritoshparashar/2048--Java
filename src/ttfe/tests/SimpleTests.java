@@ -132,18 +132,30 @@ public class SimpleTests {
     public void testInitialValueOfPieces () {
 
         int nonZeroCount = 0;
+        boolean isTwoOrFour = true;
 
         for (int i = 0; i < game.getBoardHeight(); i++) {
             
             for (int j = 0; j < game.getBoardWidth(); j++) {
                 
                 if (game.getPieceAt(i, j) != 0) {
-                    ++nonZeroCount;
+
+                    if (game.getPieceAt(i, j) == 2 || game.getPieceAt(i, j) == 4){
+                        ++nonZeroCount;
+                    }
+                    else {
+                        isTwoOrFour = false;
+                        break;
+                    }
+                    
                 }
+            }
+            if (!isTwoOrFour) {
+                break;
             }
         }
 
-        assertTrue(nonZeroCount == 2);
+        assertTrue(nonZeroCount == 2 && isTwoOrFour);
     }
 
     // __________________________________________________ //
@@ -245,25 +257,23 @@ public class SimpleTests {
         assertTrue(game.isSpaceLeft()); // Empty space must be there at starting
     }
 
+    
     @Test
-    public void testIsSpaceLeft () {
+    public void testWithAFullBoard () {
 
-        boolean emptySpaceFound = false;
         for (int i = 0; i < game.getBoardHeight(); i++) {
             
             for (int j = 0; j < game.getBoardWidth(); j++) {
-    
-                if (game.getPieceAt(i, j) == 0) {
-                    emptySpaceFound = true;
-                    break;
-                }
-            }
-            if (emptySpaceFound) {
-                break;
+                
+                game.setPieceAt(i, j, 8); // Set every piece to be non zero
+
             }
         }
-        assertTrue(emptySpaceFound);
+
+        assertTrue (!game.isSpaceLeft());
+
     }
+
 
     //@Test
     // public void addPieceTest () {
