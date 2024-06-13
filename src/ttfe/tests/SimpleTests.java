@@ -198,53 +198,60 @@ public class SimpleTests {
     // Without Direction
 
     @Test 
-    public void testIsMovePossibleWithoutDirection () {
+    public void testInitialIsMovePossibleWithoutDirection () {
 
+        assertTrue (game.isMovePossible()); // Initially there should be at least one possible move
         
-        int currentPiece = 0;
-        boolean movePossible = false;
+        // int currentPiece = 0;
+        // boolean movePossible = false;
 
-        // Loop for the innerboard (without the four outer edges)
-        for (int i = 0; i < game.getBoardHeight(); i++) {
+        // // Loop for the innerboard (without the four outer edges)
+        // for (int i = 0; i < game.getBoardHeight(); i++) {
             
-            for (int j = 0; j < game.getBoardWidth(); j++) {
+        //     for (int j = 0; j < game.getBoardWidth(); j++) {
                 
-                currentPiece = game.getPieceAt(i, j);
+        //         currentPiece = game.getPieceAt(i, j);
     
-                if (currentPiece == 0) {
-                    movePossible = true;
-                    break;
-                }
+        //         if (currentPiece == 0) {
+        //             movePossible = true;
+        //             break;
+        //         }
 
-                if (j+1 < game.getBoardWidth() && currentPiece == game.getPieceAt(i, j+1)) {
-                    movePossible = true;
-                    break;
-                }
-                if (i+1 < game.getBoardHeight() && currentPiece == game.getPieceAt(i+1, j)) {
-                    movePossible = true;
-                    break;
-                }
+        //         if (j+1 < game.getBoardWidth() && currentPiece == game.getPieceAt(i, j+1)) {
+        //             movePossible = true;
+        //             break;
+        //         }
+        //         if (i+1 < game.getBoardHeight() && currentPiece == game.getPieceAt(i+1, j)) {
+        //             movePossible = true;
+        //             break;
+        //         }
                 
-            }
+        //     }
 
-            if (movePossible) {
-                break;
-            }
-        }
+        //     if (movePossible) {
+        //         break;
+        //     }
+        // }
 
     }
 
     // With Direction
 
-    // @Test
-    // public void testIsMovePossibleWithDirection (MoveDirection direction) {
+    @Test
+    public void testInitialIsMovePossibleWithDirection () {
 
-    //     if (!game.isMovePossible()) {
-    //         assert (false);
-    //     }
-        
-    //     // TODO: Implement this
-    // }
+        // Initially, it should be possible to move in atleast one direction
+        boolean movePossible = false;
+
+        for (MoveDirection direction : MoveDirection.values()) {
+            
+            movePossible = game.isMovePossible(direction);
+            if (movePossible) {
+                break;
+            }
+        }
+        assertTrue (movePossible);
+    } 
 
     // __________________________________________________ //
 
