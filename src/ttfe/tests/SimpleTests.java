@@ -31,24 +31,29 @@ public class SimpleTests {
 	public void testAddPieceAtEmpty() {
 		int currentTiles = game.getNumPieces();
 		game.addPiece();
-		assertEquals("The number of pieces did not increase by one after adding a piece", currentTiles + 1, game.getNumPieces());
+		assertEquals( currentTiles + 1, game.getNumPieces());
 	}
 
     @Test
     public void testAddPieceValue() {
-        for (int i = 0; i < 10; i++) { // Adding pieces multiple times to test values
-            game.addPiece();
-            boolean found = false;
+        for (int i = 0; i < 14; i++) { 
+            game.addPiece(); // Add piece in each iteration
+
+            boolean isTwoOrFour = false;
             for (int x = 0; x < game.getBoardWidth(); x++) {
+
                 for (int y = 0; y < game.getBoardHeight(); y++) {
-                    int value = game.getPieceAt(x, y);
-                    if (value == 2 || value == 4) {
-                        found = true;
+
+                    int piece_val = game.getPieceAt(x, y);
+
+                    // Board should not have anything else that 2 || 4 || 0
+                    if (piece_val == 2 || piece_val == 4) {
+                        isTwoOrFour = true;
                     }
-                    assertTrue("Piece value should be 0, 2, or 4", value == 0 || value == 2 || value == 4);
+                    assertTrue("Add Pieces adds something other than 2,4", piece_val == 0 || piece_val == 2 || piece_val == 4);
                 }
             }
-            assertTrue("No new piece with value 2 or 4 was added", found);
+            assertTrue("No new piece with value 2 or 4 was added", isTwoOrFour);
         }
     }
 
