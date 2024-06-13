@@ -78,18 +78,51 @@ public class SimpleTests {
 			}
 		}
 		// Check if new tile has value of 2 or 4
-		assertTrue(twoOrFour);
-
-				
+		assertTrue(twoOrFour);	
 
 	}
 
+
+
+	@Test
+	public void addPieceTest () {
+
+		int [][] currentBoardState = this.getCurrentBoardState(game);
+
+		int num_pieces = game.getNumPieces();
+		game.addPiece();
+		assertEquals( num_pieces + 1, game.getNumPieces()); // Tests if the move was made in an empty position
+
+		int [][] newBoardState = this.getCurrentBoardState(game);
+
+		boolean twoOrFour = true;
+
+		this.printBoard(currentBoardState);
+
+		for (int i = 0; i < newBoardState.length; i++) {
+			
+			for (int j = 0; j < newBoardState[i].length; j++) {
+				
+				if (currentBoardState[i][j] != newBoardState[i][j]) 
+				{
+					if (newBoardState[i][j] != 2 || newBoardState[i][j] != 4)
+					{
+						twoOrFour = false;
+					}
+				}
+			}
+		}
+		// Check if new tile has value of 2 or 4
+		assertTrue(twoOrFour);	
+
+	}
 	@Test
 	public void testNumPieces () { //Check this later
 		int num_pieces = game.getNumPieces();
 		game.addPiece();
 		assertEquals( num_pieces + 1, game.getNumPieces()); // Tests if the move was made
 	}
+	
 
 	/*
 	 * 
