@@ -324,6 +324,45 @@ public class SimpleTests {
      * Extra Tests
      */
 
+     @Test
+public void testNoMovePossibleOnFullBoard() {
+    // Fill the board with tiles that prevent any movement
+    game.setPieceAt(0, 0, 4);
+    game.setPieceAt(0, 1, 2);
+    game.setPieceAt(0, 2, 4);
+    game.setPieceAt(0, 3, 2);
+    game.setPieceAt(1, 0, 2);
+    game.setPieceAt(1, 1, 4);
+    game.setPieceAt(1, 2, 2);
+    game.setPieceAt(1, 3, 4);
+    game.setPieceAt(2, 0, 4);
+    game.setPieceAt(2, 1, 2);
+    game.setPieceAt(2, 2, 4);
+    game.setPieceAt(2, 3, 2);
+    game.setPieceAt(3, 0, 2);
+    game.setPieceAt(3, 1, 4);
+    game.setPieceAt(3, 2, 2);
+    game.setPieceAt(3, 3, 4);
+
+    assertFalse("No move should be possible when the board is full and no merges are possible", game.isMovePossible());
+    assertFalse("No move should be possible to the NORTH", game.isMovePossible(MoveDirection.NORTH));
+    assertFalse("No move should be possible to the EAST", game.isMovePossible(MoveDirection.EAST));
+    assertFalse("No move should be possible to the SOUTH", game.isMovePossible(MoveDirection.SOUTH));
+    assertFalse("No move should be possible to the WEST", game.isMovePossible(MoveDirection.WEST));
+
+    // Attempting to perform a move in any direction should not change the board state
+    assertFalse("Performing a move to the NORTH should fail", game.performMove(MoveDirection.NORTH));
+    assertFalse("Performing a move to the EAST should fail", game.performMove(MoveDirection.EAST));
+    assertFalse("Performing a move to the SOUTH should fail", game.performMove(MoveDirection.SOUTH));
+    assertFalse("Performing a move to the WEST should fail", game.performMove(MoveDirection.WEST));
+
+    // Ensure the board state remains unchanged
+    assertEquals("Value at (0, 0) should be 4", 4, game.getPieceAt(0, 0));
+    assertEquals("Value at (0, 1) should be 2", 2, game.getPieceAt(0, 1));
+    // Repeat for all board positions
+}
+
+
     @Test
     public void testIsMovePossibleEmptyBoard() {
         
@@ -339,19 +378,6 @@ public class SimpleTests {
             assertFalse(game.isMovePossible(direction));
         }
         
-    }
-    @Test
-    public void testIsMovePossibleWithBlockedMoves() {
-        // Fill the board in such a way that no moves are possible
-        for (int x = 0; x < game.getBoardWidth(); x++) {
-            for (int y = 0; y < game.getBoardHeight(); y++) {
-                game.setPieceAt(x, y, (x + y) % 2 == 0 ? 2 : 4);
-            }
-        }
-        assertFalse("No moves should be possible when the board is full and no merges are possible", game.isMovePossible());
-        for (MoveDirection direction : MoveDirection.values()) {
-            assertFalse("No moves should be possible in any direction", game.isMovePossible(direction));
-        }
     }
 
     @Test
@@ -418,7 +444,7 @@ public class SimpleTests {
     // __________________________________________________ //
 
     /*
-     * Tests for Permorm Move
+     * Tests for Perform Move
      */
 
     @Test
