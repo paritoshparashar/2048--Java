@@ -324,7 +324,23 @@ public class SimpleTests {
      * Extra Tests
      */
 
-     @Test
+    @Test
+    public void testIsMovePossibleEmptyBoard() {
+        
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                game.setPieceAt(i, j, 0);
+            }
+        }
+        assertFalse (game.isMovePossible());
+
+        for (MoveDirection direction : MoveDirection.values()) {
+            assertFalse(game.isMovePossible(direction));
+        }
+        
+    }
+    @Test
     public void testIsMovePossibleWithBlockedMoves() {
         // Fill the board in such a way that no moves are possible
         for (int x = 0; x < game.getBoardWidth(); x++) {
@@ -423,7 +439,7 @@ public class SimpleTests {
 
 
     @Test
-     public void testPerformMoveToNorth() {
+     public void testPerformMoveNorth() {
         // Set up a scenario where a move to NORTH should merge tiles
         game.setPieceAt(0, 0, 2);
         game.setPieceAt(0, 1, 2);
