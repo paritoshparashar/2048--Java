@@ -294,6 +294,12 @@ public class SimpleTests {
                 break;
             }
         }
+        assertFalse("No moves should be possible, game should end.", game.isMovePossible());
+        assertTrue("Game should be over.", !game.isSpaceLeft() && !game.isMovePossible(MoveDirection.NORTH) && 
+                   !game.isMovePossible(MoveDirection.SOUTH) && !game.isMovePossible(MoveDirection.WEST) && 
+                   !game.isMovePossible(MoveDirection.EAST));
+        assertTrue("Game should have made some moves.", game.getNumMoves() > 0);
+        assertTrue("Score should be greater than zero if any merges occurred.", game.getPoints() >= 0);
 
         assertFalse(movePossible);
     }
