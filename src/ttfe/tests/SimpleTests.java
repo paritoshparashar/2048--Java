@@ -244,13 +244,13 @@ public class SimpleTests {
 
     // __________________With Direction__________________ //
 
-    // @Test(expected = IllegalArgumentException.class)
-    // public void testPreconditionError() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testPreconditionError() {
 
-    //     MoveDirection direction = null;
+        MoveDirection direction = null;
 
-    //     game.isMovePossible(direction);
-    // }
+        game.isMovePossible(direction);
+    }
 
     @Test
     public void testInitialIsMovePossibleWithDirection () {
