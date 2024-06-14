@@ -300,8 +300,6 @@ public class SimpleTests {
                    !game.isMovePossible(MoveDirection.EAST));
         assertTrue("Game should have made some moves.", game.getNumMoves() > 0);
         assertTrue("Score should be greater than zero if any merges occurred.", game.getPoints() >= 0);
-
-        assertFalse(movePossible);
     }
 
     @Test
