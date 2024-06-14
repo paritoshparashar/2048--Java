@@ -320,6 +320,55 @@ public class SimpleTests {
         assertTrue(movePossible);
     }
 
+    /*
+     * Extra Tests
+     */
+
+     @Test
+    public void testIsMovePossibleWithBlockedMoves() {
+        // Fill the board in such a way that no moves are possible
+        for (int x = 0; x < game.getBoardWidth(); x++) {
+            for (int y = 0; y < game.getBoardHeight(); y++) {
+                game.setPieceAt(x, y, (x + y) % 2 == 0 ? 2 : 4);
+            }
+        }
+        assertFalse("No moves should be possible when the board is full and no merges are possible", game.isMovePossible());
+        for (MoveDirection direction : MoveDirection.values()) {
+            assertFalse("No moves should be possible in any direction", game.isMovePossible(direction));
+        }
+    }
+
+    @Test
+    public void testIsMovePossibleWithOnePossibleMove() {
+        // Fill the board but leave one possible move
+        for (int x = 0; x < game.getBoardWidth(); x++) {
+            for (int y = 0; y < game.getBoardHeight(); y++) {
+                game.setPieceAt(x, y, 2);
+            }
+        }
+        // Remove one piece to make a move possible
+        game.setPieceAt(0, 0, 0);
+        assertTrue("A move should be possible when there is at least one empty space", game.isMovePossible());
+        assertTrue("A move should be possible to the NORTH", game.isMovePossible(MoveDirection.NORTH));
+        assertTrue("A move should be possible to the EAST", game.isMovePossible(MoveDirection.EAST));
+        assertTrue("A move should be possible to the SOUTH", game.isMovePossible(MoveDirection.SOUTH));
+        assertTrue("A move should be possible to the WEST", game.isMovePossible(MoveDirection.WEST));
+    }
+
+    @Test
+    public void testIsMovePossibleWithMergeableTiles() {
+        // Set up the board so that merges are possible
+        game.setPieceAt(0, 0, 2);
+        game.setPieceAt(0, 1, 2);
+        game.setPieceAt(1, 0, 4);
+        game.setPieceAt(1, 1, 4);
+
+        assertTrue("A move should be possible when tiles can be merged", game.isMovePossible());
+        assertTrue("A move to the NORTH should be possible when tiles can be merged", game.isMovePossible(MoveDirection.NORTH));
+        assertTrue("A move to the EAST should be possible when tiles can be merged", game.isMovePossible(MoveDirection.EAST));
+        assertTrue("A move to the SOUTH should be possible when tiles can be merged", game.isMovePossible(MoveDirection.SOUTH));
+        assertTrue("A move to the WEST should be possible when tiles can be merged", game.isMovePossible(MoveDirection.WEST));
+    }
 
     // __________________________________________________ //
 
