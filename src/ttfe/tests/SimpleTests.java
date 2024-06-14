@@ -405,7 +405,24 @@ public class SimpleTests {
      * Tests for Permorm Move
      */
 
+    @Test
+    public void testInitialPerformMove () {
 
+        // Initially, it should be possible to move in atleast one direction
+        boolean movePossible = false;
+
+        for (MoveDirection direction : MoveDirection.values()) {
+            
+            movePossible = game.performMove(direction);
+            if (movePossible) {
+                break;
+            }
+        }
+        assertTrue (movePossible);
+    }
+
+
+    @Test
      public void testPerformMoveToNorth() {
         // Set up a scenario where a move to NORTH should merge tiles
         game.setPieceAt(0, 0, 2);
