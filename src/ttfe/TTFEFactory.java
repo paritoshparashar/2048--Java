@@ -18,8 +18,21 @@ public class TTFEFactory {
 	 */
 	public static SimulatorInterface createSimulator(int width, int height,
 			Random r) {
-		// TODO: Implement me. Return a simulator instance.
-		return null;
+		
+		SimulatorInterface game;
+		try {
+
+			game = new Simulator(width, height, r);
+
+			game.addPiece();
+			game.addPiece();
+
+			return game;
+
+		} catch ( Exception e) {
+			return null;
+		}
+		
 	}
 
 	/**
