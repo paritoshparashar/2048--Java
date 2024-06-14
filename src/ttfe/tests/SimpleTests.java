@@ -406,10 +406,49 @@ public class SimpleTests {
      */
 
 
-    @Test
-    public void testInitialPerfomMove () {
-
+     public void testPerformMoveToNorth() {
+        // Set up a scenario where a move to NORTH should merge tiles
+        game.setPieceAt(0, 0, 2);
+        game.setPieceAt(0, 1, 2);
+        game.setPieceAt(0, 2, 4);
+        assertTrue("Move to the NORTH should be possible", game.performMove(MoveDirection.NORTH));
+        assertEquals("Value at (0, 0) should be 4 after merging", 4, game.getPieceAt(0, 0));
+        assertEquals("Value at (0, 1) should be 4 after merging", 4, game.getPieceAt(0, 1));
+        assertEquals("Value at (0, 2) should be 0 after merging", 0, game.getPieceAt(0, 2));
     }
 
+    @Test
+    public void testPerformMoveToEast() {
+        // Set up a scenario where a move to EAST should merge tiles
+        game.setPieceAt(1, 0, 2);
+        game.setPieceAt(2, 0, 2);
+        game.setPieceAt(3, 0, 4);
+        assertTrue("Move to the EAST should be possible", game.performMove(MoveDirection.EAST));
+        assertEquals("Value at (3, 0) should be 4 after merging", 4, game.getPieceAt(3, 0));
+        assertEquals("Value at (2, 0) should be 4 after merging", 4, game.getPieceAt(2, 0));
+        assertEquals("Value at (1, 0) should be 0 after merging", 0, game.getPieceAt(1, 0));
+    }
+
+    @Test
+    public void testPerformMoveToSouth() {
+        // Set up a scenario where a move to SOUTH should merge tiles
+        game.setPieceAt(0, 3, 2);
+        game.setPieceAt(0, 2, 2);
+        game.setPieceAt(0, 1, 4);
+        assertTrue("Move to the SOUTH should be possible", game.performMove(MoveDirection.SOUTH));
+        assertEquals("Value at (0, 3) should be 4 after merging", 4, game.getPieceAt(0, 3));
+        assertEquals("Value at (0, 2) should be 4 after merging", 4, game.getPieceAt(0, 2));
+        assertEquals("Value at (0, 1) should be 0 after merging", 0, game.getPieceAt(0, 1));
+    }
+
+    @Test
+    public void testPerformMoveToWest() {
+        // Set up a scenario where a move to WEST should merge tiles
+        game.setPieceAt(3, 0, 2);
+        game.setPieceAt(2, 0, 2);
+        game.setPieceAt(1, 0, 4);
+        assertTrue("Move to the WEST should be possible", game.performMove(MoveDirection.WEST));
+        assertEquals("Value at (0, 0) should be 4 after merging", 4, game.getPieceAt(0, 0));
+    }
     // __________________________________________________ //
 }
