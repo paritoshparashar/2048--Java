@@ -115,12 +115,14 @@ public class Simulator implements SimulatorInterface  {
         
         int currentPiece = 0;
         int nonZero = 0;
+        int zero = 0;
 
         for (int i = 0; i < this.getBoardWidth(); i++) {
             for (int j = 0; j < this.getBoardHeight(); j++) {
                 
                 currentPiece = this.getPieceAt(i, j);
                 if (currentPiece == 0) {
+                    ++zero;
                     // If we found a number perviously and found an empty tile now (inner if protects us from empty board) 
                     if (nonZero != 0) {
                         return true;
@@ -139,6 +141,9 @@ public class Simulator implements SimulatorInterface  {
                     ++nonZero;
                 }
                 
+            }
+            if (zero > 0  && nonZero > 0) {
+                return true;
             }  
         }
 
