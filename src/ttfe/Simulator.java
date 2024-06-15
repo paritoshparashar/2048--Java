@@ -2,9 +2,6 @@ package ttfe;
 
 import java.util.Random;
 
-import org.junit.Before;
-import org.junit.Test;
-
 public class Simulator implements SimulatorInterface  {
 
     int width;
@@ -153,6 +150,10 @@ public class Simulator implements SimulatorInterface  {
     @Override
     public boolean isMovePossible(MoveDirection direction) {
         
+        if (direction == null) {
+            throw new IllegalArgumentException();
+
+        }
         int currentPiece = 0;
         boolean inZero = false;
 
@@ -254,9 +255,187 @@ public class Simulator implements SimulatorInterface  {
 
     @Override
     public boolean performMove(MoveDirection direction) {
-        // TODO Auto-generated method stub
-        return false;
+
+        if (direction == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if (!this.isMovePossible(direction)) {
+            return false;
+        }
+
+        // First swap number with white spaces (if direction is north => start searching from top, if east => start searching from right)
+        // Now add consecutive tiles with same value
+        // Again remove the newly created whitespaces
+
+            switch (direction) {
+                case MoveDirection.NORTH:
+                case MoveDirection.SOUTH:
+                    removeWhiteSpaces_NS(direction);
+                    addConsecutiveTiles_NS(direction); // Increase score here
+                    removeWhiteSpaces_NS(direction);
+                    break;
+
+                case MoveDirection.EAST:
+                case MoveDirection.WEST:
+                    removeWhiteSpaces_EW(direction);
+                    addConsecutiveTiles_EW(direction);
+                    removeWhiteSpaces_EW(direction);
+                    break;
+                
+            }
+            ++this.numMoves;
+
+        return true;
     }
+    
+    public int[] setZerosAtLast (int oldArr []){
+
+        int n = oldArr.length;
+        int[] newArr = new int[n];
+        int index = 0;
+
+        // Iterate through the input array and copy positive integers to resultArray
+        for (int i = 0; i < n; i++) {
+            
+            if (oldArr[i] != 0) {
+                newArr[index++] = oldArr[i];
+            }
+        }
+
+        return newArr;
+
+    }
+    public int[] setZerosAtStart (int oldArr []){
+
+        int n = oldArr.length;
+        int[] newArr = new int[n];
+        int index = n-1;
+
+        // Iterate through the input array and copy positive integers to resultArray
+        for (int i = n-1; i >= 0; i--) {
+
+            if (oldArr[i] != 0) {
+                newArr[index--] = oldArr[i];
+            }
+        }
+        return newArr;
+
+    }
+
+    public void removeWhiteSpaces_NS (MoveDirection direction) {
+
+        int[] transformetColumn = new int [this.getBoardHeight()];
+
+        for (int i = 0; i < this.getBoardWidth(); i++) {
+
+            if (direction == MoveDirection.NORTH) {
+            transformetColumn = setZerosAtLast(this.board[i]);
+            this.board[i] = transformetColumn;
+            }
+            else if (direction == MoveDirection.SOUTH) {
+            transformetColumn = setZerosAtStart(this.board[i]);
+            this.board[i] = transformetColumn;
+            }
+        }
+    }
+    public void removeWhiteSpaces_EW (MoveDirection direction) {
+
+        int[] transformedColumn = new int [this.getBoardHeight()];
+
+        for (int j = 0; j < this.getBoardHeight(); j++) {
+
+            for (int i = 0; i < this.getBoardWidth(); i++) {
+                transformedColumn[i] = this.board[i][j];    // Get the one-d array
+            }
+             
+            if (direction == MoveDirection.WEST) {
+            transformedColumn = setZerosAtLast(transformedColumn);
+            }
+            else if (direction == MoveDirection.EAST) {
+            transformedColumn = setZerosAtStart(transformedColumn);
+            }
+
+            for (int i = 0; i < this.getBoardWidth(); i++) {
+                this.board[i][j] = transformedColumn[i]; // Put it back after transforming
+            }
+        }
+    }
+    
+    public int[] addTilesInDirection (int oldArr [] , MoveDirection direction){
+
+        int n = oldArr.length;
+        int[] newArr = new int[n];
+        int index = 0;
+
+        for (int i = 0; i < n; i++) {
+            
+            if ((i+1 < n) && (oldArr[i] == oldArr[i+1])) {
+                
+                switch (direction) {
+                    case MoveDirection.NORTH:
+                    case MoveDirection.WEST:
+                        score += 2*oldArr[i];
+                        newArr[index++] = 2*oldArr[i];
+                        newArr[index++] = 0;
+                        ++i;
+                        break;
+
+                    case MoveDirection.SOUTH:
+                    case MoveDirection.EAST:
+                        score += 2*oldArr[i];
+                        newArr[index++] = 0;
+                        newArr[index++] = 2*oldArr[i];
+                        ++i;
+                        break;
+                
+                }
+                
+            }
+            else {
+                newArr[index++] = oldArr[i];
+            }
+        }
+
+        return newArr;
+
+    }
+    
+    public void addConsecutiveTiles_NS (MoveDirection direction) {
+
+        int[] transformetColumn = new int [this.getBoardHeight()];
+
+        for (int i = 0; i < this.getBoardWidth(); i++) {
+            
+            transformetColumn = addTilesInDirection(this.board[i] , direction);
+            this.board[i] = transformetColumn;
+          
+        }
+    }
+
+    public void addConsecutiveTiles_EW (MoveDirection direction) {
+
+        int[] transformedColumn = new int [this.getBoardHeight()];
+
+        for (int j = 0; j < this.getBoardHeight(); j++) {
+
+            for (int i = 0; i < this.getBoardWidth(); i++) {
+                transformedColumn[i] = this.board[i][j];    // Get the one-d array
+            }
+             
+            if (direction == MoveDirection.WEST) {
+            transformedColumn = addTilesInDirection(transformedColumn , direction);
+            }
+            else if (direction == MoveDirection.EAST) {
+            transformedColumn = addTilesInDirection(transformedColumn , direction);
+            }
+
+            for (int i = 0; i < this.getBoardWidth(); i++) {
+                this.board[i][j] = transformedColumn[i]; // Put it back after transforming
+            }
+        }
+    }
+
 
     @Override
     public void run(PlayerInterface player, UserInterface ui) {
@@ -266,9 +445,7 @@ public class Simulator implements SimulatorInterface  {
 
         if (this.isMovePossible()) {
 
-            if (this.isMovePossible(direction)) {
-                
-            }
+                this.performMove(direction);
 
         }
         

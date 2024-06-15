@@ -185,9 +185,12 @@ public class SimpleTests {
         }
 
         game.setPieceAt(0, 0, 2);
-        game.setPieceAt(2, 0, 2);
-        if (game.isMovePossible(MoveDirection.EAST)) {
-            game.performMove(MoveDirection.EAST);
+        game.setPieceAt(0, 2, 2);
+        if (game.isMovePossible(MoveDirection.NORTH)) {
+            assertTrue(game.performMove(MoveDirection.NORTH));
+        }
+        if (game.isMovePossible(MoveDirection.SOUTH)) {
+            assertTrue(game.performMove(MoveDirection.SOUTH));
         }
         assertTrue(4 == game.getPoints());
 
@@ -525,6 +528,6 @@ public void testNoMovePossibleOnFullBoard() {
     public static void main(String[] args){
         SimpleTests test = new SimpleTests();
         test.setUp();
-        test.testIsMovePossibleWithMergeableTiles();
+        test.testPointsAfterAMove();
     }
 }
