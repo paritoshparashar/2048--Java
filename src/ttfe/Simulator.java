@@ -37,6 +37,20 @@ public class Simulator implements SimulatorInterface  {
 
     }
 
+    // public int numberOfEmptyTiles () {
+    //     int count = 0;
+
+    //     for (int i = 0; i < this.getBoardWidth(); i++) {
+            
+    //         for (int j = 0; j < this.getBoardHeight(); j++) {
+                
+    //             if (this.board[i][j] == 0) {
+    //                 ++count;
+    //             }
+    //         }
+    //     }
+    //     return count;
+    // }
 
     @Override
     public void addPiece() {
@@ -44,11 +58,17 @@ public class Simulator implements SimulatorInterface  {
         if (!this.isSpaceLeft()) {
             throw new IllegalStateException("Cannot add to a full board");
         }
-        
+
         int randomX = r.nextInt(this.width);
         int randomY = r.nextInt(this.height);
-        int tileValue = r.nextInt(10);
         
+
+        while (this.getPieceAt(randomX, randomY) != 0 ) {
+            randomX = r.nextInt(this.width);
+            randomY = r.nextInt(this.height);
+        }
+        
+        int tileValue = r.nextInt(10);
         if (tileValue < 1) {
             tileValue = 4; // 0.1 Probability
         }
@@ -221,14 +241,14 @@ public class Simulator implements SimulatorInterface  {
                 }
 
                 // If adjacent tiles are same
-                 if (i+1 < this.getBoardWidth() && currentPiece == this.getPieceAt(i+1, j)) 
+                if (i+1 < this.getBoardWidth() && currentPiece == this.getPieceAt(i+1, j)) 
                 {
                     if (direction == MoveDirection.EAST || direction == MoveDirection.WEST) 
                     {
                         return true;
                     }
                 }
-                else if (j+1 < this.getBoardHeight() && currentPiece == this.getPieceAt(i, j+1)) 
+                if (j+1 < this.getBoardHeight() && currentPiece == this.getPieceAt(i, j+1)) 
                 {
                     if (direction == MoveDirection.NORTH || direction == MoveDirection.SOUTH) 
                     {

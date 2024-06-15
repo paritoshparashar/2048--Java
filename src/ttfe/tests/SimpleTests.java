@@ -545,10 +545,53 @@ public void testNoMovePossibleOnFullBoard() {
         
         assertTrue( game.isMovePossible());
     }
+    @Test
+    public void testPerformMoveSpecial1 () {
 
-    // public static void main(String[] args){
-    //     SimpleTests test = new SimpleTests();
-    //     test.setUp();
-    //     test.isMovePossibleSpecial();
-    // }
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+            
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                game.setPieceAt(i, j, 0); // Set every piece to be zero
+
+            }
+        }
+        game.setPieceAt(0, 0, 2);
+        game.setPieceAt(0, 2, 2);
+        game.setPieceAt(0, 3, 8);
+        game.setPieceAt(1, 3, 4);
+
+        assertTrue( game.performMove(MoveDirection.SOUTH));
+        assertTrue(8 == game.getPieceAt(0, 3));
+    }
+    @Test
+    public void testIsMovePossibleWithDirectionSpecial1 () {
+
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+            
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                game.setPieceAt(i, j, 0); // Set every piece to be zero
+
+            }
+        }
+        game.setPieceAt(0, 0, 2);
+        game.setPieceAt(0, 1, 2);
+        game.setPieceAt(0, 2, 16);
+        game.setPieceAt(0, 3, 8);
+
+        game.setPieceAt(1, 0, 2);
+        game.setPieceAt(1, 1, 4);
+        game.setPieceAt(1, 2, 8);
+        game.setPieceAt(1, 3, 64);
+
+        assertTrue( game.performMove(MoveDirection.SOUTH));
+        assertTrue(4 == game.getPieceAt(0, 1));
+    }
+
+    public static void main(String[] args){
+        SimpleTests test = new SimpleTests();
+        test.setUp();
+        test.testIsMovePossibleWithDirectionSpecial1();
+    }
 }
