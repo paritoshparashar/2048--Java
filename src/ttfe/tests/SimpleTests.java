@@ -525,9 +525,9 @@ public void testNoMovePossibleOnFullBoard() {
     }
     // __________________________________________________ //
 
-    public static void main(String[] args){
-        SimpleTests test = new SimpleTests();
-        test.setUp();
-        test.testPointsAfterAMove();
-    }
+    // public static void main(String[] args){
+    //     SimpleTests test = new SimpleTests();
+    //     test.setUp();
+    //     test.testPointsAfterAMove();
+    // }
 }
