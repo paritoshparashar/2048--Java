@@ -119,26 +119,25 @@ public class Simulator implements SimulatorInterface  {
         int currentPiece = 0;
         int nonZero = 0;
 
-        // Loop for the innerboard (without the four outer edges)
         for (int i = 0; i < this.getBoardWidth(); i++) {
-            
             for (int j = 0; j < this.getBoardHeight(); j++) {
                 
                 currentPiece = this.getPieceAt(i, j);
-    
                 if (currentPiece == 0) {
-                    
+                    // If we found a number perviously and found an empty tile now (inner if protects us from empty board) 
                     if (nonZero != 0) {
                         return true;
                     }
                 }
 
+                // If adjacent tiles are same
                 else if (j+1 < this.getBoardWidth() && currentPiece == this.getPieceAt(i, j+1)) {
                     return true;
                 }
                 else if (i+1 < this.getBoardHeight() && currentPiece == this.getPieceAt(i+1, j)) {
                     return true;
                 }
+                // Increment when found something non-similar and non zero
                 else {
                     ++nonZero;
                 }
@@ -153,8 +152,90 @@ public class Simulator implements SimulatorInterface  {
 
     @Override
     public boolean isMovePossible(MoveDirection direction) {
-        // TODO Auto-generated method stub
+        
+        int currentPiece = 0;
+        boolean inZero = false;
+
+        for (int i = 0; i < this.getBoardWidth(); i++) {
+            
+            for (int j = 0; j < this.getBoardHeight(); j++) {
+                
+                currentPiece = this.getPieceAt(i, j);
+    
+                // If we found a number perviously and found an empty tile now (inner if protects us from empty board) 
+                if (currentPiece == 0) {
+
+                    inZero = true;
+
+                    switch (direction) 
+                    {
+                        case MoveDirection.EAST:
+                            
+                            for (int i2 = i-1; i2 >= 0; i2--) { // Check left of empty tile
+
+                                if ( !(i2 < 0 ) && this.board[i2][j] != 0) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case MoveDirection.WEST:
+                            for (int i2 = i+1; i2 < this.getBoardWidth(); i2++) { // Check right of empty tile
+
+                                if ( !(i2 > this.getBoardWidth()) && this.board[i2][j] != 0) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case MoveDirection.NORTH:
+                            for (int j2 = j+1; j2 < this.getBoardHeight(); j2++) { // Check below the empty tile
+
+                                if ( !(j2 > this.getBoardWidth()) && this.board[i][j2] != 0) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case MoveDirection.SOUTH:
+                            for (int j2 = j-1; j2 >= 0; j2--) { // Check above the empty tile
+
+                                if ( !(j2 < 0 ) && this.board[i][j2] != 0) {
+                                    return true;
+                                }
+                            }
+                            break;
+                    }
+                    
+                }
+
+                if (inZero) {
+                    inZero = false;
+                    continue;
+                }
+
+                // If adjacent tiles are same
+                 if (i+1 < this.getBoardWidth() && currentPiece == this.getPieceAt(i+1, j)) 
+                {
+                    if (direction == MoveDirection.EAST || direction == MoveDirection.WEST) 
+                    {
+                        return true;
+                    }
+                }
+                else if (j+1 < this.getBoardHeight() && currentPiece == this.getPieceAt(i, j+1)) 
+                {
+                    if (direction == MoveDirection.NORTH || direction == MoveDirection.SOUTH) 
+                    {
+                        return true;
+                    }
+                }
+
+            }
+                
+        }  
+        
         return false;
+
     }
 
     @Override
