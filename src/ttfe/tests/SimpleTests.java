@@ -546,9 +546,9 @@ public void testNoMovePossibleOnFullBoard() {
         assertTrue( game.isMovePossible());
     }
 
-    public static void main(String[] args){
-        SimpleTests test = new SimpleTests();
-        test.setUp();
-        test.isMovePossibleSpecial();
-    }
+    // public static void main(String[] args){
+    //     SimpleTests test = new SimpleTests();
+    //     test.setUp();
+    //     test.isMovePossibleSpecial();
+    // }
 }
