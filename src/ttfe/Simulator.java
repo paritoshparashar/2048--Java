@@ -279,7 +279,7 @@ public class Simulator implements SimulatorInterface  {
                 case MoveDirection.EAST:
                 case MoveDirection.WEST:
                     removeWhiteSpaces_EW(direction);
-                    addConsecutiveTiles_EW(direction);
+                    addConsecutiveTiles_EW(direction); // Increase score here
                     removeWhiteSpaces_EW(direction);
                     break;
                 
@@ -439,15 +439,24 @@ public class Simulator implements SimulatorInterface  {
 
     @Override
     public void run(PlayerInterface player, UserInterface ui) {
+
+        if (player == null || ui == null) {
+            throw new IllegalArgumentException();
+        }
         
         MoveDirection direction;
-        direction = ui.getUserMove();
 
-        if (this.isMovePossible()) {
+        while (this.isMovePossible()) {
 
-                this.performMove(direction);
+            direction = player.getPlayerMove(this, ui
+            );
+            this.performMove(direction);
+            this.addPiece();
+            ui.updateScreen(this);
 
         }
+        
+        ui.showGameOverScreen(this); 
         
     }
 
