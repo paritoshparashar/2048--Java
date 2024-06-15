@@ -440,6 +440,8 @@ public class Simulator implements SimulatorInterface  {
     @Override
     public void run(PlayerInterface player, UserInterface ui) {
 
+        ui.updateScreen(this);
+
         if (player == null || ui == null) {
             throw new IllegalArgumentException();
         }
@@ -448,11 +450,12 @@ public class Simulator implements SimulatorInterface  {
 
         while (this.isMovePossible()) {
 
-            direction = player.getPlayerMove(this, ui
-            );
-            this.performMove(direction);
-            this.addPiece();
-            ui.updateScreen(this);
+            direction = player.getPlayerMove(this, ui);
+
+            if (this.performMove(direction)) {
+                this.addPiece();
+                ui.updateScreen(this);
+            } 
 
         }
         

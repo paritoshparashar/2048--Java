@@ -525,9 +525,30 @@ public void testNoMovePossibleOnFullBoard() {
     }
     // __________________________________________________ //
 
-    // public static void main(String[] args){
-    //     SimpleTests test = new SimpleTests();
-    //     test.setUp();
-    //     test.testPointsAfterAMove();
-    // }
+    @Test
+    public void isMovePossibleSpecial () {
+
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+            
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                game.setPieceAt(i, j, 0); // Set every piece to be zero
+
+            }
+        }
+        game.setPieceAt(3, 0, 4);
+        game.setPieceAt(3, 1, 2);
+        game.setPieceAt(3, 2, 8);
+        game.setPieceAt(3, 3, 2);
+        game.setPieceAt(2, 3, 4);
+        game.setPieceAt(2, 2, 16);
+        
+        assertTrue( game.isMovePossible());
+    }
+
+    public static void main(String[] args){
+        SimpleTests test = new SimpleTests();
+        test.setUp();
+        test.isMovePossibleSpecial();
+    }
 }
