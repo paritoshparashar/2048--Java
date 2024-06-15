@@ -387,7 +387,7 @@ public class Simulator implements SimulatorInterface  {
         }
     }
     
-    public int[] addTilesInDirection (int oldArr [] , MoveDirection direction){
+    public int[] addTilesInDirection_NW (int oldArr [] , MoveDirection direction){
 
         int n = oldArr.length;
         int[] newArr = new int[n];
@@ -395,35 +395,49 @@ public class Simulator implements SimulatorInterface  {
 
         for (int i = 0; i < n; i++) {
             
-            if ((i+1 < n) && (oldArr[i] == oldArr[i+1])) {
+            if ((i+1 < n) && (oldArr[i] == oldArr[i+1])) {              
                 
-                switch (direction) {
-                    case MoveDirection.NORTH:
-                    case MoveDirection.WEST:
                         score += 2*oldArr[i];
                         newArr[index++] = 2*oldArr[i];
                         newArr[index++] = 0;
                         ++i;
-                        break;
-
-                    case MoveDirection.SOUTH:
-                    case MoveDirection.EAST:
-                        score += 2*oldArr[i];
-                        newArr[index++] = 0;
-                        newArr[index++] = 2*oldArr[i];
-                        ++i;
-                        break;
-                
-                }
                 
             }
+
             else {
                 newArr[index++] = oldArr[i];
             }
         }
 
         return newArr;
+    }
 
+    public int[] addTilesInDirection_SE (int oldArr [] , MoveDirection direction){
+
+        int n = oldArr.length;
+        int[] newArr = new int[n];
+        int index = n-1;
+
+        for (int i = n-1; i >= 0; i--) {
+            
+            if ((i-1 >= 0) && (oldArr[i] == oldArr[i-1])) {
+                
+                        score += 2*oldArr[i];
+                        newArr[index--] = 2*oldArr[i];
+                        newArr[index--] = 0;
+                        --i;
+                        break;
+                
+                }
+                
+            
+            else {
+                newArr[index--] = oldArr[i];
+            }
+        }
+    
+
+        return newArr;
     }
     
     public void addConsecutiveTiles_NS (MoveDirection direction) {
@@ -431,10 +445,24 @@ public class Simulator implements SimulatorInterface  {
         int[] transformetColumn = new int [this.getBoardHeight()];
 
         for (int i = 0; i < this.getBoardWidth(); i++) {
-            
-            transformetColumn = addTilesInDirection(this.board[i] , direction);
-            this.board[i] = transformetColumn;
-          
+
+            switch (direction) {
+                case MoveDirection.NORTH:
+                    transformetColumn = addTilesInDirection_NW(this.board[i] , direction);
+                    this.board[i] = transformetColumn;
+                break;
+
+                case MoveDirection.SOUTH:
+                    transformetColumn = addTilesInDirection_SE(this.board[i] , direction);
+                    this.board[i] = transformetColumn;
+                
+                break;
+
+                default:
+                    break;
+
+             
+             }
         }
     }
 
@@ -449,10 +477,10 @@ public class Simulator implements SimulatorInterface  {
             }
              
             if (direction == MoveDirection.WEST) {
-            transformedColumn = addTilesInDirection(transformedColumn , direction);
+            transformedColumn = addTilesInDirection_NW(transformedColumn , direction);
             }
             else if (direction == MoveDirection.EAST) {
-            transformedColumn = addTilesInDirection(transformedColumn , direction);
+            transformedColumn = addTilesInDirection_SE(transformedColumn , direction);
             }
 
             for (int i = 0; i < this.getBoardWidth(); i++) {
