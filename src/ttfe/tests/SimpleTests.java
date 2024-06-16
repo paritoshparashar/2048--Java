@@ -606,6 +606,7 @@ public void testNoMovePossibleOnFullBoard() {
 
         assertTrue( game.performMove(MoveDirection.SOUTH));
         assertTrue(4 == game.getPieceAt(0, 2));
+        assertTrue(2 == game.getPieceAt(0, 1));
     }
 
     public static void main(String[] args){

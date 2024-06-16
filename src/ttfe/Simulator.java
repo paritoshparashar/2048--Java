@@ -9,7 +9,7 @@ public class Simulator implements SimulatorInterface  {
     int board[][];
     int numMoves;
     int score;
-
+    boolean reached2048;
     Random r;
 
     // Constructor
@@ -25,7 +25,8 @@ public class Simulator implements SimulatorInterface  {
         this.numMoves = 0;
         this.score = 0;
         this.r = r;
-
+        this.reached2048 = false;
+        
         // Fill the board with empty tiles
         for (int i = 0; i < this.board.length; i++) {
 
@@ -398,6 +399,9 @@ public class Simulator implements SimulatorInterface  {
             if ((i+1 < n) && (oldArr[i] == oldArr[i+1])) {              
                 
                         score += 2*oldArr[i];
+                        if (oldArr[i] == 1024) {
+                            this.reached2048 = true;
+                        }
                         newArr[index++] = 2*oldArr[i];
                         newArr[index++] = 0;
                         ++i;
@@ -423,11 +427,12 @@ public class Simulator implements SimulatorInterface  {
             if ((i-1 >= 0) && (oldArr[i] == oldArr[i-1])) {
                 
                         score += 2*oldArr[i];
+                        if (oldArr[i] == 1024) {
+                            this.reached2048 = true;
+                        }
                         newArr[index--] = 2*oldArr[i];
                         newArr[index--] = 0;
-                        --i;
-                        break;
-                
+                        --i;                
                 }
                 
             
@@ -501,7 +506,7 @@ public class Simulator implements SimulatorInterface  {
         
         MoveDirection direction;
 
-        while (this.isMovePossible()) {
+        while (this.isMovePossible() && !this.reached2048) {
 
             direction = player.getPlayerMove(this, ui);
 
