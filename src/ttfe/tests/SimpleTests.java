@@ -622,10 +622,10 @@ public class SimpleTests {
     public void testRunGameSimulation() {
 
         PlayerInterface myPlayer = TTFEFactory.createPlayer(false);
-        UserInterface mykUI = TTFEFactory.createUserInterface(game);
+        UserInterface myUI = TTFEFactory.createUserInterface(game);
         
         // Run the game
-        game.run(myPlayer, mykUI);
+        game.run(myPlayer, myUI);
         
         // Verify game end conditions
         assertTrue(!game.isMovePossible());
