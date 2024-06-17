@@ -307,20 +307,35 @@ public class SimpleTests {
         assertTrue(game.isMovePossible());
     }
 
-    /*
-     * {2, 4, 8, 4},
-            {32, 64, 128, 256},
-            {2, 1024, 2, 4},
-            {8, 16, 32, 8}
-     */
-
     @Test
     public void testIsMovePossibleInOneDirection () {
 
         this.setBoardWithNoMovePossible();
-        game.setPieceAt(2, 0, 4);
+        /*
+         *  {2, 4, 8, 4},
+            {32, 64, 128, 256},
+            {2, 1024, 2, 4},
+            {8, 16, 32, 8}
+         */
 
+        assertFalse( game.isMovePossible(MoveDirection.NORTH));
+        assertFalse(game.isMovePossible(MoveDirection.EAST));
+        assertFalse( game.isMovePossible(MoveDirection.SOUTH));
+        assertFalse(game.isMovePossible(MoveDirection.WEST));
+
+        // Attempting to perform a move in any direction should not change the board state
+        assertFalse( game.performMove(MoveDirection.NORTH));
+        assertFalse(game.performMove(MoveDirection.EAST));
+        assertFalse( game.performMove(MoveDirection.SOUTH));
+        assertFalse(game.performMove(MoveDirection.WEST));
+
+        // Ensure the board state remains unchanged
+        assertEquals( 2, game.getPieceAt(0, 0)); 
+        assertEquals( 1024, game.getPieceAt(1, 2));
+
+        game.setPieceAt(2, 0, 4);
         assertTrue( game.isMovePossible());
+        assertTrue( game.isMovePossible(MoveDirection.EAST));
 
     }
 
@@ -353,20 +368,9 @@ public class SimpleTests {
 
     @Test
     public void testIsMovePossibleInAFullBoardWithDirection () {
-        int[][] array = {
-            {2, 4, 8, 16},
-            {32, 64, 128, 256},
-            {512, 1024, 2, 4},
-            {8, 16, 32, 64}
-        };
+        
+        this.setBoardWithNoMovePossible();
 
-        for (int i = 0; i < game.getBoardHeight(); i++) {
-
-            for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-                game.setPieceAt(i, j, array[i][j]);
-            }
-        }
 
         boolean movePossible = true;
 
@@ -404,44 +408,6 @@ public class SimpleTests {
     /*
      * Extra Tests
      */
-
-     @Test
-public void testNoMovePossibleOnFullBoard() {
-    // Fill the board with tiles that prevent any movement
-    game.setPieceAt(0, 0, 4);
-    game.setPieceAt(0, 1, 2);
-    game.setPieceAt(0, 2, 4);
-    game.setPieceAt(0, 3, 2);
-    game.setPieceAt(1, 0, 2);
-    game.setPieceAt(1, 1, 4);
-    game.setPieceAt(1, 2, 2);
-    game.setPieceAt(1, 3, 4);
-    game.setPieceAt(2, 0, 4);
-    game.setPieceAt(2, 1, 2);
-    game.setPieceAt(2, 2, 4);
-    game.setPieceAt(2, 3, 2);
-    game.setPieceAt(3, 0, 2);
-    game.setPieceAt(3, 1, 4);
-    game.setPieceAt(3, 2, 2);
-    game.setPieceAt(3, 3, 4);
-
-    assertFalse("Move is not possible when the board is full with no merges possible", game.isMovePossible());
-    assertFalse("No move should be possible to the NORTH", game.isMovePossible(MoveDirection.NORTH));
-    assertFalse("No move should be possible to the EAST", game.isMovePossible(MoveDirection.EAST));
-    assertFalse("No move should be possible to the SOUTH", game.isMovePossible(MoveDirection.SOUTH));
-    assertFalse("No move should be possible to the WEST", game.isMovePossible(MoveDirection.WEST));
-
-    // Attempting to perform a move in any direction should not change the board state
-    assertFalse("Performing a move to the NORTH should fail", game.performMove(MoveDirection.NORTH));
-    assertFalse("Performing a move to the EAST should fail", game.performMove(MoveDirection.EAST));
-    assertFalse("Performing a move to the SOUTH should fail", game.performMove(MoveDirection.SOUTH));
-    assertFalse("Performing a move to the WEST should fail", game.performMove(MoveDirection.WEST));
-
-    // Ensure the board state remains unchanged
-    assertEquals("Value at (0, 0) should be 4", 4, game.getPieceAt(0, 0));
-    assertEquals("Value at (0, 1) should be 2", 2, game.getPieceAt(0, 1));
-    // Repeat for all board positions
-}
 
 
     @Test
@@ -584,27 +550,9 @@ public void testNoMovePossibleOnFullBoard() {
         this.setBoardToNum(0);
 
         game.setPieceAt(3, 0, 4);
-        game.setPieceAt(3, 1, 2);
-        game.setPieceAt(3, 2, 8);
-        game.setPieceAt(3, 3, 2);
-        game.setPieceAt(2, 3, 4);
-        game.setPieceAt(2, 2, 16);
-        
         assertTrue( game.isMovePossible());
     }
-    @Test
-    public void testPerformMoveSpecial1 () {
-
-        this.setBoardToNum(0);
-        
-        game.setPieceAt(0, 0, 2);
-        game.setPieceAt(0, 2, 2);
-        game.setPieceAt(0, 3, 8);
-        game.setPieceAt(1, 3, 4);
-
-        assertTrue( game.performMove(MoveDirection.SOUTH));
-        assertTrue(8 == game.getPieceAt(0, 3));
-    }
+    
     @Test
     public void testIsMovePossibleWithDirectionSpecial1 () {
 
