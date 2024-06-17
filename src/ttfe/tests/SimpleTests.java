@@ -1,20 +1,21 @@
 package ttfe.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import ttfe.GUI;
+import ttfe.HumanPlayer;
 import ttfe.MoveDirection;
+import ttfe.PlayerInterface;
 import ttfe.SimulatorInterface;
 import ttfe.TTFEFactory;
+import ttfe.UserInterface;
 
-/**
+/*
  * This class provides a very simple example of how to write tests for this project.
  * You can implement your own tests within this class or any other class within this package.
  * Tests in other packages will not be run and considered for completion of the project.
@@ -209,7 +210,8 @@ public class SimpleTests {
     @Test
     public void testRandomBoardValues () {
 
-        this.setBoardWithNoMovePossible(); 
+        this.setBoardWithNoMovePossible();
+
         assertEquals(1024, game.getPieceAt(1, 2));
         assertEquals(8, game.getPieceAt(3, 3));
         assertEquals(128, game.getPieceAt(2, 1));
@@ -271,7 +273,7 @@ public class SimpleTests {
         }
 
             assertTrue(game.performMove(MoveDirection.SOUTH));
-            assertTrue(game.performMove(MoveDirection.WEST));
+            assertTrue(game.performMove(MoveDirection.WEST)); 
 
         assertTrue(156 == game.getPoints());
 
@@ -382,9 +384,9 @@ public class SimpleTests {
             }
         }
         
-        assertTrue("Game should be over.", !game.isSpaceLeft() && !game.isMovePossible(MoveDirection.NORTH) && 
-                   !game.isMovePossible(MoveDirection.SOUTH) && !game.isMovePossible(MoveDirection.WEST) && 
-                   !game.isMovePossible(MoveDirection.EAST));
+        assertTrue("Game should be over", !game.isSpaceLeft() && !game.isMovePossible(MoveDirection.EAST) && 
+                   !game.isMovePossible(MoveDirection.NORTH) && !game.isMovePossible(MoveDirection.WEST) && 
+                   !game.isMovePossible(MoveDirection.SOUTH));
         
         assertFalse(movePossible);
     }
@@ -427,11 +429,11 @@ public class SimpleTests {
 
         this.setBoardToNum(2);
 
-        assertTrue("A move should be possible when there is at least one empty space", game.isMovePossible());
-        assertTrue("A move should be possible to the NORTH", game.isMovePossible(MoveDirection.NORTH));
-        assertTrue("A move should be possible to the EAST", game.isMovePossible(MoveDirection.EAST));
-        assertTrue("A move should be possible to the SOUTH", game.isMovePossible(MoveDirection.SOUTH));
-        assertTrue("A move should be possible to the WEST", game.isMovePossible(MoveDirection.WEST));
+        assertTrue( game.isMovePossible());
+        assertTrue( game.isMovePossible(MoveDirection.NORTH));
+        assertTrue( game.isMovePossible(MoveDirection.EAST));
+        assertTrue( game.isMovePossible(MoveDirection.SOUTH));
+        assertTrue( game.isMovePossible(MoveDirection.WEST));
     }
 
     @Test
@@ -445,7 +447,7 @@ public class SimpleTests {
         game.setPieceAt(1, 0, 4);
         game.setPieceAt(1, 1, 4);
 
-        assertTrue("Move is possible when tiles can be merged", game.isMovePossible());
+        assertTrue( game.isMovePossible());
         assertTrue(game.isMovePossible(MoveDirection.NORTH));
         assertTrue(game.isMovePossible(MoveDirection.EAST));
         assertTrue(game.isMovePossible(MoveDirection.SOUTH));
@@ -471,7 +473,6 @@ public class SimpleTests {
         this.setBoardToNum(8);
 
         assertTrue (!game.isSpaceLeft());
-
     }
 
     // __________________________________________________ //
@@ -499,48 +500,56 @@ public class SimpleTests {
 
     @Test
      public void testPerformMoveNorth() {
-        // Set up a scenario where a move to NORTH should merge tiles
+
+        this.setBoardToNum(0);
+
         game.setPieceAt(0, 0, 2);
         game.setPieceAt(0, 1, 2);
         game.setPieceAt(0, 2, 4);
-        assertTrue("Move to the NORTH should be possible", game.performMove(MoveDirection.NORTH));
-        assertEquals("Value at (0, 0) should be 4 after merging", 4, game.getPieceAt(0, 0));
-        assertEquals("Value at (0, 1) should be 4 after merging", 4, game.getPieceAt(0, 1));
-        assertEquals("Value at (0, 2) should be 0 after merging", 0, game.getPieceAt(0, 2));
+        assertTrue( game.performMove(MoveDirection.NORTH));
+        assertEquals( 4, game.getPieceAt(0, 0));
+        assertEquals( 4, game.getPieceAt(0, 1));
+        assertEquals( 0, game.getPieceAt(0, 2));
     }
 
     @Test
     public void testPerformMoveToEast() {
-        // Set up a scenario where a move to EAST should merge tiles
+
+        this.setBoardToNum(0);
+
         game.setPieceAt(1, 0, 2);
         game.setPieceAt(2, 0, 2);
         game.setPieceAt(3, 0, 4);
-        assertTrue("Move to the EAST should be possible", game.performMove(MoveDirection.EAST));
-        assertEquals("Value at (3, 0) should be 4 after merging", 4, game.getPieceAt(3, 0));
-        assertEquals("Value at (2, 0) should be 4 after merging", 4, game.getPieceAt(2, 0));
-        assertEquals("Value at (1, 0) should be 0 after merging", 0, game.getPieceAt(1, 0));
+        assertTrue(game.performMove(MoveDirection.EAST));
+        assertEquals( 4, game.getPieceAt(3, 0));
+        assertEquals( 4, game.getPieceAt(2, 0));
+        assertEquals( 0, game.getPieceAt(1, 0));
     }
 
     @Test
     public void testPerformMoveToSouth() {
-        // Set up a scenario where a move to SOUTH should merge tiles
-        game.setPieceAt(0, 3, 2);
-        game.setPieceAt(0, 2, 2);
+
+        this.setBoardToNum(0);
+
+        game.setPieceAt(0, 3, 4);
+        game.setPieceAt(0, 2, 4);
         game.setPieceAt(0, 1, 4);
-        assertTrue("Move to the SOUTH should be possible", game.performMove(MoveDirection.SOUTH));
-        assertEquals("Value at (0, 3) should be 4 after merging", 4, game.getPieceAt(0, 3));
-        assertEquals("Value at (0, 2) should be 4 after merging", 4, game.getPieceAt(0, 2));
-        assertEquals("Value at (0, 1) should be 0 after merging", 0, game.getPieceAt(0, 1));
+        assertTrue( game.performMove(MoveDirection.SOUTH));
+        assertEquals( 8, game.getPieceAt(0, 3));
+        assertEquals( 4, game.getPieceAt(0, 2));
+        assertEquals( 0, game.getPieceAt(0, 1));
     }
 
     @Test
     public void testPerformMoveToWest() {
-        // Set up a scenario where a move to WEST should merge tiles
+
+        this.setBoardToNum(0);
+
         game.setPieceAt(3, 0, 2);
         game.setPieceAt(2, 0, 2);
         game.setPieceAt(1, 0, 4);
-        assertTrue("Move to the WEST should be possible", game.performMove(MoveDirection.WEST));
-        assertEquals("Value at (0, 0) should be 4 after merging", 4, game.getPieceAt(0, 0));
+        assertTrue( game.performMove(MoveDirection.WEST));
+        assertEquals( 4, game.getPieceAt(0, 0));
     }
     // __________________________________________________ //
 
@@ -584,6 +593,51 @@ public class SimpleTests {
         assertTrue(4 == game.getPieceAt(0, 2));
         assertTrue(2 == game.getPieceAt(0, 1));
     }
+
+    // __________________________________________________ //
+
+    /*
+     * Test for setPieceAt
+     */
+
+    @Test
+    public void testSetPieceAt () {
+
+        this.setBoardToNum(2);
+
+        game.setPieceAt(0, 0, 0);
+        game.setPieceAt(0, 1, 16);
+
+        assertTrue (game.getPieceAt(0, 0) == 0 && game.getPieceAt(0, 1) == 16);
+
+    }
+
+    // __________________________________________________ //
+
+    /*
+     * Test for run
+     */
+
+     @Test
+    public void testRunGameSimulation() {
+
+        PlayerInterface myPlayer = TTFEFactory.createPlayer(false);
+        UserInterface mykUI = TTFEFactory.createUserInterface(game);
+        
+        // Run the game
+        game.run(myPlayer, mykUI);
+        
+        // Verify game end conditions
+        assertTrue(!game.isMovePossible());
+        assertTrue(game.getNumMoves() !=  0);
+        assertTrue(!game.isSpaceLeft());
+        assertTrue(!game.isMovePossible());
+        assertTrue(game.getPoints() != 0);
+    }
+    
+
+
+    // __________________________________________________ //
 
     @Test
     public void testGameWin () {
