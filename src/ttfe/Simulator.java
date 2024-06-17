@@ -498,11 +498,11 @@ public class Simulator implements SimulatorInterface  {
     @Override
     public void run(PlayerInterface player, UserInterface ui) {
 
-        ui.updateScreen(this);
-
         if (player == null || ui == null) {
             throw new IllegalArgumentException();
         }
+
+        ui.updateScreen(this);
         
         MoveDirection direction;
 

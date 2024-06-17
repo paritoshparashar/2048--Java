@@ -2,6 +2,7 @@ package ttfe.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
@@ -54,10 +55,26 @@ public class SimpleTests {
                     if (piece_val == 2 || piece_val == 4) {
                         isTwoOrFour = true;
                     }
-                    assertTrue("Add Pieces adds something other than 2,4", piece_val == 0 || piece_val == 2 || piece_val == 4);
+                    assertTrue(piece_val == 0 || piece_val == 2 || piece_val == 4);
                 }
             }
             assertTrue("No new piece with value 2 or 4 was added", isTwoOrFour);
+        }
+    }
+
+    @Test
+    public void testAddPieceOnFullBoard () {
+
+        this.setBoardToNum(8);
+        
+        assertThrows(IllegalStateException.class, () -> {game.addPiece();});
+
+        for (int i = 0; i < game.getBoardWidth(); i++) {
+            
+            for (int j = 0; j < game.getBoardHeight(); j++) {
+                
+                assertTrue(game.getPieceAt(i, j) == 8);
+            }
         }
     }
     // __________________________________________________ //
@@ -176,13 +193,7 @@ public class SimpleTests {
     @Test
     public void testPointsAfterAMove (){
 
-        for (int i = 0; i < game.getBoardHeight(); i++) {
-            
-            for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-                game.setPieceAt(i, j, 0); // Remove all the pieces
-            }
-        }
+        this.setBoardToNum(0);
 
         game.setPieceAt(0, 0, 2);
         game.setPieceAt(0, 2, 2);
@@ -234,13 +245,7 @@ public class SimpleTests {
     @Test
     public void testIsMovePossibleInAFullBoardWithoutDirection2 () {
 
-        for (int i = 0; i < game.getBoardHeight(); i++) {
-
-            for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-                game.setPieceAt(i, j, 2);
-            }
-        }
+        this.setBoardToNum(2);
         
         assertTrue(game.isMovePossible());
     }
@@ -309,13 +314,7 @@ public class SimpleTests {
     @Test
     public void testIsMovePossibleInAFullBoardWithDirection2 () {
 
-        for (int i = 0; i < game.getBoardHeight(); i++) {
-
-            for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-                game.setPieceAt(i, j, 2);
-            }
-        }
+        this.setBoardToNum(2);
 
         boolean movePossible = false;
         
@@ -352,7 +351,7 @@ public void testNoMovePossibleOnFullBoard() {
     game.setPieceAt(3, 2, 2);
     game.setPieceAt(3, 3, 4);
 
-    assertFalse("No move should be possible when the board is full and no merges are possible", game.isMovePossible());
+    assertFalse("Move is not possible when the board is full with no merges possible", game.isMovePossible());
     assertFalse("No move should be possible to the NORTH", game.isMovePossible(MoveDirection.NORTH));
     assertFalse("No move should be possible to the EAST", game.isMovePossible(MoveDirection.EAST));
     assertFalse("No move should be possible to the SOUTH", game.isMovePossible(MoveDirection.SOUTH));
@@ -374,12 +373,7 @@ public void testNoMovePossibleOnFullBoard() {
     @Test
     public void testIsMovePossibleEmptyBoard() {
         
-        for (int i = 0; i < game.getBoardHeight(); i++) {
-            for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-                game.setPieceAt(i, j, 0);
-            }
-        }
+        this.setBoardToNum(0);
         assertFalse (game.isMovePossible());
 
         for (MoveDirection direction : MoveDirection.values()) {
@@ -391,11 +385,7 @@ public void testNoMovePossibleOnFullBoard() {
     @Test
     public void testIsMovePossibleWithOnePossibleMove() {
 
-        for (int x = 0; x < game.getBoardWidth(); x++) {
-            for (int y = 0; y < game.getBoardHeight(); y++) {
-                game.setPieceAt(x, y, 2);
-            }
-        }
+        this.setBoardToNum(2);
 
         assertTrue("A move should be possible when there is at least one empty space", game.isMovePossible());
         assertTrue("A move should be possible to the NORTH", game.isMovePossible(MoveDirection.NORTH));
@@ -407,23 +397,19 @@ public void testNoMovePossibleOnFullBoard() {
     @Test
     public void testIsMovePossibleWithMergeableTiles() {
 
-        for (int i = 0; i < game.getBoardHeight(); i++) {
-            for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-                game.setPieceAt(i, j, 0);
-            }
-        }
+        this.setBoardToNum(0);
+
         // Set up the board so that merges are possible
         game.setPieceAt(0, 0, 2);
         game.setPieceAt(0, 1, 2);
         game.setPieceAt(1, 0, 4);
         game.setPieceAt(1, 1, 4);
 
-        assertTrue("A move should be possible when tiles can be merged", game.isMovePossible());
-        assertTrue("A move to the NORTH should be possible when tiles can be merged", game.isMovePossible(MoveDirection.NORTH));
-        assertTrue("A move to the EAST should be possible when tiles can be merged", game.isMovePossible(MoveDirection.EAST));
-        assertTrue("A move to the SOUTH should be possible when tiles can be merged", game.isMovePossible(MoveDirection.SOUTH));
-        assertFalse("A move to the WEST should be possible when tiles can be merged", game.isMovePossible(MoveDirection.WEST));
+        assertTrue("Move is possible when tiles can be merged", game.isMovePossible());
+        assertTrue(game.isMovePossible(MoveDirection.NORTH));
+        assertTrue(game.isMovePossible(MoveDirection.EAST));
+        assertTrue(game.isMovePossible(MoveDirection.SOUTH));
+        assertFalse(game.isMovePossible(MoveDirection.WEST));
     }
 
     // __________________________________________________ //
@@ -442,14 +428,7 @@ public void testNoMovePossibleOnFullBoard() {
     @Test
     public void testWithAFullBoard () {
 
-        for (int i = 0; i < game.getBoardHeight(); i++) {
-            
-            for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-                game.setPieceAt(i, j, 8); // Set every piece to be non zero
-
-            }
-        }
+        this.setBoardToNum(8);
 
         assertTrue (!game.isSpaceLeft());
 
@@ -528,14 +507,8 @@ public void testNoMovePossibleOnFullBoard() {
     @Test
     public void isMovePossibleSpecial () {
 
-        for (int i = 0; i < game.getBoardHeight(); i++) {
-            
-            for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-                game.setPieceAt(i, j, 0); // Set every piece to be zero
+        this.setBoardToNum(0);
 
-            }
-        }
         game.setPieceAt(3, 0, 4);
         game.setPieceAt(3, 1, 2);
         game.setPieceAt(3, 2, 8);
@@ -548,14 +521,8 @@ public void testNoMovePossibleOnFullBoard() {
     @Test
     public void testPerformMoveSpecial1 () {
 
-        for (int i = 0; i < game.getBoardHeight(); i++) {
-            
-            for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-                game.setPieceAt(i, j, 0); // Set every piece to be zero
-
-            }
-        }
+        this.setBoardToNum(0);
+        
         game.setPieceAt(0, 0, 2);
         game.setPieceAt(0, 2, 2);
         game.setPieceAt(0, 3, 8);
@@ -567,14 +534,8 @@ public void testNoMovePossibleOnFullBoard() {
     @Test
     public void testIsMovePossibleWithDirectionSpecial1 () {
 
-        for (int i = 0; i < game.getBoardHeight(); i++) {
-            
-            for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-                game.setPieceAt(i, j, 0); // Set every piece to be zero
+        this.setBoardToNum(0);
 
-            }
-        }
         game.setPieceAt(0, 0, 2);
         game.setPieceAt(0, 1, 2);
         game.setPieceAt(0, 2, 16);
@@ -591,14 +552,7 @@ public void testNoMovePossibleOnFullBoard() {
     @Test
     public void testPerformMove3sameValueColumn () {
 
-        for (int i = 0; i < game.getBoardHeight(); i++) {
-            
-            for (int j = 0; j < game.getBoardWidth(); j++) {
-                
-                game.setPieceAt(i, j, 0); // Set every piece to be zero
-
-            }
-        }
+        this.setBoardToNum(0);
         game.setPieceAt(0, 0, 2);
         game.setPieceAt(0, 1, 2);
         game.setPieceAt(0, 2, 2);
@@ -607,6 +561,31 @@ public void testNoMovePossibleOnFullBoard() {
         assertTrue( game.performMove(MoveDirection.SOUTH));
         assertTrue(4 == game.getPieceAt(0, 2));
         assertTrue(2 == game.getPieceAt(0, 1));
+    }
+
+    @Test
+    public void testGameWin () {
+
+        this.setBoardToNum(0);
+        game.setPieceAt(0, 0, 1024);
+        game.setPieceAt(0, 1, 1024);
+        game.setPieceAt(0, 2, 2);
+        game.setPieceAt(0, 3, 8);
+
+        assertTrue( game.performMove(MoveDirection.SOUTH));
+        assertTrue(2048 == game.getPieceAt(0, 1));
+    }
+
+    public void setBoardToNum (int num) {
+
+        for (int i = 0; i < game.getBoardHeight(); i++) {
+            
+            for (int j = 0; j < game.getBoardWidth(); j++) {
+                
+                game.setPieceAt(i, j, num); // Set every piece to be zero
+
+            }
+        }
     }
 
     public static void main(String[] args){
