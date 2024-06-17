@@ -79,6 +79,10 @@ public class SimpleTests {
     }
     // __________________________________________________ //
 
+    /*
+     * Tests for Board Dimensions
+     */
+
     @Test
 	public void testInitialBoardHeight() {
 		assertTrue("The initial game board did not have correct height",
@@ -90,11 +94,18 @@ public class SimpleTests {
 				4 == game.getBoardWidth());
 	}
 
+    @Test
+    public void testBoardIsSquare () {
+        assertTrue (game.getBoardHeight() == game.getBoardWidth());
+    }
+
+
     // __________________________________________________ //
 
     /*
      * Tests for Number of Moves
      */
+
     @Test
     public void testInitialNumOfMoves () {
         assertTrue ("Initial moves not equal to zero", 0 == game.getNumMoves());
@@ -131,6 +142,16 @@ public class SimpleTests {
             game.performMove (MoveDirection.WEST);
             assertEquals(1, game.getNumMoves());
         }
+    }
+
+    @Test
+    public void testNumOfMovesAfterMergingMultipleTiles () {
+
+        this.setBoardToNum(8);
+        game.performMove(MoveDirection.EAST);
+        game.performMove(MoveDirection.SOUTH);
+
+        assertTrue (2 == game.getNumMoves());
     }
     // __________________________________________________ //
 
