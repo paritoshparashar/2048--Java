@@ -205,13 +205,6 @@ public class SimpleTests {
 
         assertTrue(nonZeroCount == 2 && isTwoOrFour);
     }
-
-    /*
-     * {2, 4, 8, 4},
-            {32, 64, 128, 256},
-            {2, 1024, 2, 4},
-            {8, 16, 32, 8}
-     */
     
     @Test
     public void testRandomBoardValues () {
@@ -296,7 +289,6 @@ public class SimpleTests {
     public void testInitialIsMovePossibleWithoutDirection () {
 
         assertTrue (game.isMovePossible()); // Initially there should be at least one possible move
-
     }
 
     @Test
