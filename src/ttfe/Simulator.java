@@ -38,21 +38,6 @@ public class Simulator implements SimulatorInterface  {
 
     }
 
-    // public int numberOfEmptyTiles () {
-    //     int count = 0;
-
-    //     for (int i = 0; i < this.getBoardWidth(); i++) {
-            
-    //         for (int j = 0; j < this.getBoardHeight(); j++) {
-                
-    //             if (this.board[i][j] == 0) {
-    //                 ++count;
-    //             }
-    //         }
-    //     }
-    //     return count;
-    // }
-
     @Override
     public void addPiece() {
 
@@ -268,15 +253,12 @@ public class Simulator implements SimulatorInterface  {
     @Override
     public boolean isSpaceLeft() {
 
-        for (int i = 0; i < this.board.length; i++) {
-            for (int j = 0; j < this.board[i].length; j++) {
-                
-                if (this.board[i][j] == 0) {
-                    return true;
-                }
-            }
+        if (this.getNumPieces() == this.getBoardHeight() * this.getBoardWidth()) {
+            return false;
         }
-        return false;
+        else {
+            return true;
+        }
     }
 
     @Override

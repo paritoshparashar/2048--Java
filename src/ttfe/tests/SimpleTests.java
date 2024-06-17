@@ -163,6 +163,12 @@ public class SimpleTests {
     public void testInitialNumberOfPieces () {
         assertEquals(2, game.getNumPieces());
     }
+    @Test
+    public void testNumberOfPiecesFullBoard () {
+        
+        this.setBoardToNum(4);
+        assertEquals(16, game.getNumPieces());
+    }
 
     // __________________________________________________ //
 
