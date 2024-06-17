@@ -307,16 +307,33 @@ public class SimpleTests {
         assertTrue(game.isMovePossible());
     }
 
+    /*
+     * {2, 4, 8, 4},
+            {32, 64, 128, 256},
+            {2, 1024, 2, 4},
+            {8, 16, 32, 8}
+     */
+
+    @Test
+    public void testIsMovePossibleInOneDirection () {
+
+        this.setBoardWithNoMovePossible();
+        game.setPieceAt(2, 0, 4);
+
+        assertTrue( game.isMovePossible());
+
+    }
+
 
     // __________________With Direction__________________ //
 
-    // @Test(expected = IllegalArgumentException.class)
-    // public void testPreconditionError() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testPreconditionError() {
 
-    //     MoveDirection direction = null;
+        MoveDirection direction = null;
 
-    //     game.isMovePossible(direction);
-    // }
+        game.isMovePossible(direction);
+    }
 
     @Test
     public void testInitialIsMovePossibleWithDirection () {
