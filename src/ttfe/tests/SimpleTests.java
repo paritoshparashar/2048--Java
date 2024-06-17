@@ -165,7 +165,7 @@ public class SimpleTests {
     }
     @Test
     public void testNumberOfPiecesFullBoard () {
-        
+
         this.setBoardToNum(4);
         assertEquals(16, game.getNumPieces());
     }
@@ -173,7 +173,7 @@ public class SimpleTests {
     // __________________________________________________ //
 
     /*
-     * Test for the initial value of pieces
+     * Tests for the value of pieces (getPieceAt(int x, int y))
      */
 
     @Test
@@ -206,6 +206,22 @@ public class SimpleTests {
         assertTrue(nonZeroCount == 2 && isTwoOrFour);
     }
 
+    /*
+     * {2, 4, 8, 4},
+            {32, 64, 128, 256},
+            {2, 1024, 2, 4},
+            {8, 16, 32, 8}
+     */
+    
+    @Test
+    public void testRandomBoardValues () {
+
+        this.setBoardWithNoMovePossible(); 
+        assertEquals(1024, game.getPieceAt(1, 2));
+        assertEquals(8, game.getPieceAt(3, 3));
+        assertEquals(128, game.getPieceAt(2, 1));
+    }
+
     // __________________________________________________ //
 
     /*
@@ -218,12 +234,13 @@ public class SimpleTests {
     }
 
     @Test
-    public void testPointsAfterAMove (){
+    public void testPointsAfterMove (){
 
         this.setBoardToNum(0);
 
         game.setPieceAt(0, 0, 2);
         game.setPieceAt(0, 2, 2);
+        
         if (game.isMovePossible(MoveDirection.NORTH)) {
             assertTrue(game.performMove(MoveDirection.NORTH));
         }
@@ -231,6 +248,39 @@ public class SimpleTests {
             assertTrue(game.performMove(MoveDirection.SOUTH));
         }
         assertTrue(4 == game.getPoints());
+
+    }
+
+    @Test
+    public void testPointsAfterComplexMove (){
+
+        this.setBoardToNum(0);
+
+        game.setPieceAt(0, 0, 16);
+        game.setPieceAt(0, 1, 16);
+        game.setPieceAt(0, 2, 8);
+        game.setPieceAt(0, 3, 8);
+        
+        game.setPieceAt(1, 0, 16);
+        game.setPieceAt(1, 1, 0);
+        game.setPieceAt(1, 2, 16);
+        game.setPieceAt(1, 3, 4);
+
+        game.setPieceAt(2, 0, 2);
+        game.setPieceAt(2, 1, 2);
+        game.setPieceAt(2, 2, 2);
+        game.setPieceAt(2, 3, 4);
+
+        assertTrue(game.isMovePossible());
+
+        for (MoveDirection direction : MoveDirection.values()) {
+            assertTrue (game.isMovePossible(direction)); // Move possible in all directions
+        }
+
+            assertTrue(game.performMove(MoveDirection.SOUTH));
+            assertTrue(game.performMove(MoveDirection.WEST));
+
+        assertTrue(156 == game.getPoints());
 
     }
 
@@ -251,20 +301,8 @@ public class SimpleTests {
 
     @Test
     public void testIsMovePossibleInAFullBoardWithoutDirection () {
-        int[][] array = {
-            {2, 4, 8, 16},
-            {32, 64, 128, 256},
-            {512, 1024, 2, 4},
-            {8, 16, 32, 64}
-        };
-
-        for (int i = 0; i < game.getBoardWidth(); i++) {
-
-            for (int j = 0; j < game.getBoardHeight(); j++) {
-                
-                game.setPieceAt(i, j, array[i][j]);
-            }
-        }
+        
+        this.setBoardWithNoMovePossible();
 
         assertFalse(game.isMovePossible());
     }
@@ -611,6 +649,24 @@ public void testNoMovePossibleOnFullBoard() {
                 
                 game.setPieceAt(i, j, num); // Set every piece to be zero
 
+            }
+        }
+    }
+
+    public void setBoardWithNoMovePossible () {
+
+        int[][] array = {
+            {2, 4, 8, 4},
+            {32, 64, 128, 256},
+            {2, 1024, 2, 4},
+            {8, 16, 32, 8}
+        };
+
+        for (int i = 0; i < game.getBoardWidth(); i++) {
+
+            for (int j = 0; j < game.getBoardHeight(); j++) {
+                
+                game.setPieceAt(i, j, array[j][i]);
             }
         }
     }
