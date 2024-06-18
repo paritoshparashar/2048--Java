@@ -7,8 +7,6 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 
-import ttfe.GUI;
-import ttfe.HumanPlayer;
 import ttfe.MoveDirection;
 import ttfe.PlayerInterface;
 import ttfe.SimulatorInterface;
@@ -682,9 +680,9 @@ public class SimpleTests {
         }
     }
 
-    public static void main(String[] args){
-        SimpleTests test = new SimpleTests();
-        test.setUp();
-        test.testPerformMove3sameValueColumn();
-    }
+    // public static void main(String[] args){
+    //     SimpleTests test = new SimpleTests();
+    //     test.setUp();
+    //     test.testPerformMove3sameValueColumn();
+    // }
 }
