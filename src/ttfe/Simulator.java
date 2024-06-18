@@ -488,7 +488,7 @@ public class Simulator implements SimulatorInterface  {
         
         MoveDirection direction;
 
-        while (this.isMovePossible() && !this.reached2048) {
+        while (this.isMovePossible()) {
 
             direction = player.getPlayerMove(this, ui);
 
