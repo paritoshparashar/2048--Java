@@ -16,11 +16,13 @@ public class TTFEFactory {
 	 * 
 	 * @return A 2048 simulator.
 	 */
-	public static SimulatorInterface createSimulator(int width, int height,
-			Random r) {
+	public static SimulatorInterface createSimulator(int width, int height,Random r) {
+
+		if (width < 2 || height < 2 || r == null) {
+			throw new IllegalArgumentException ("Invalid command line arguments");
+		}
 		
 		SimulatorInterface game;
-		try {
 
 			game = new Simulator(width, height, r);
 
@@ -29,9 +31,7 @@ public class TTFEFactory {
 
 			return game;
 
-		} catch ( Exception e) {
-			return null;
-		}
+		
 		
 	}
 

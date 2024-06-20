@@ -13,11 +13,7 @@ public class Simulator implements SimulatorInterface  {
     Random r;
 
     // Constructor
-    Simulator (int width, int height, Random r) throws Exception{
-
-        if (width < 2 || height < 2 || r == null) {
-            throw new IllegalArgumentException ("Invalid command line arguments");
-        }
+    Simulator (int width, int height, Random r) {
 
         this.width = width;
         this.height = height;
